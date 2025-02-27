@@ -23,7 +23,7 @@ const DoctorAbout = ({doctor}) => {
                 <div>
                    
                     <p className='text-[16px] font-medium leading-6 text-textColor'>
-                     {doctor.qualifications}
+                     {doctor.education}
                     </p>
                     
                 </div>
@@ -42,7 +42,7 @@ const DoctorAbout = ({doctor}) => {
     <ul className='pt-4 md:p-5 grid sm:grid-cols-2 gap-[30px]'>
         <li className='p-2 rounded bg-green-300'>
             <span className=' text-primaryColor leading-6 text-[15px]'>
-               {doctor.experiences}
+               {doctor.experience} Years
 
             </span>
            

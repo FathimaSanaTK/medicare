@@ -1,99 +1,60 @@
-import React, {  useEffect, useState } from 'react'
-import doctorimg from '../../assets/images/doctor-img02.png'
-import star from '../../assets/images/Star.png'
-import DoctorAbout from '../../components/doctors/DoctorAbout'
-import Feedback from '../../components/doctors/Feedback'
-import SidePanel from '../../components/doctors/SidePanel'
+
+
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-
-
-
+import { firestore } from '../../firebase'; // Ensure correct Firebase config import
+import { doc, getDoc } from 'firebase/firestore';
+import star from '../../assets/images/star.png';
+import DoctorAbout from '../../components/doctors/DoctorAbout';
+import Feedback from '../../components/doctors/Feedback';
+import SidePanel from '../../components/doctors/SidePanel';
 
 const DoctorDetails = () => {
-  const [tab,setTab]=useState("about")
-  const [doctor,setDoctor]=useState([])
-  
-   let params=useParams()
-  const id=params.id;
-  const getADoctor=async()=>{
-    
+  const [tab, setTab] = useState("about");
+  const [doctor, setDoctor] = useState(null);
+  const { id } = useParams();
+
+  useEffect(() => {
+    const getDoctor = async () => {
+      try {
+        const doctorRef = doc(firestore, "doctors", id);
+        const doctorSnap = await getDoc(doctorRef);
+
+        if (doctorSnap.exists()) {
+          setDoctor({ id: doctorSnap.id, ...doctorSnap.data() });
+        } else {
+          console.log("No such doctor found!");
+        }
+      } catch (error) {
+        console.error("Error fetching doctor details:", error);
+      }
+    };
+
+    getDoctor();
+  }, [id]);
+
+  if (!doctor) {
+    return <div className="text-center text-xl font-semibold">Loading...</div>;
   }
 
-  useEffect(()=>{
-    getADoctor()
-  },[])
-
-   
- 
   return (
     <section>
-      <div className='max-w-[1170px] px-5 mx-auto '>
-        <div className='grid md:grid-cols-4 gap-[50px] '>
-          <div className='md:col-span-2'>
-            <div className='flex items-center gap-5 '>
-              <figure className='max-w-[200px] max-h-[200px] '>
-                <img src={doctor.photo} alt="" className='w-full'/>
-
-              </figure>
-              <div>
-                <span className='bg-[#CCF0F3] text-irisBlueColor py-1 px-6 text-[12px] 
-                leading-4 font-semibold rounded '>
-{doctor.specialty}                </span>
-                <h3 className='text-headingColor text-[22px] leading-9 mt-3 font-bold'>
-                   {doctor.name}
-                </h3>
-                <div className='flex items-center gap-[6px]'>
-                  <span className='flex items-center gap-[6px] tex-[14px] leading-5 lg:text-[16px]
-                  lg:leading-7 font-semibold text-headingColor '>
-                    <img src={star} alt="" /> {doctor.avgRating}
-
-                  </span>
-                  <span className='tex-[14px] leading-5 lg:text-[16px]
-                  lg:leading-7 font-semibold text-headingColor'>
-                    ({doctor.totalRating})
-                  </span>
-
-                </div>
-                <p className='text_para text-[14px] leading-5'> {doctor.hospital}</p>
-              </div>
-
-
-            </div>
-
-            <div className='mt-[50px] border-b border-solid border-[#0066ff34] '>
-              <button onClick={()=>setTab("about")}
-              className={`${tab=="about" && "border-b border-solid border-primaryColor"} py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}>
-                About
-              </button>
-
-              <button onClick={()=>setTab("feedback")}
-              className={`${tab=="feedback" && "border-b border-solid border-primaryColor"} py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}>
-                Feedback
-              </button>
-
-            </div>
-
-            <div className='mt-3'>
-             {
-              tab==="about" && <DoctorAbout doctor={doctor}/>
-             }
-             {
-              tab==="feedback" && <Feedback />
-             }
-            </div>
-
+      <div className="max-w-[1170px] px-5 mx-auto">
+        <div className="grid md:grid-cols-4 gap-[50px]">
+          <div className="md:col-span-2">
+            <figure className="max-w-[200px] max-h-[200px]">
+              <img src={doctor.photo} alt={doctor.name} className="w-full rounded-md" />
+            </figure>
+            <h3 className="text-headingColor text-[22px] font-bold">{doctor.name}</h3>
+            <p className="text-[14px] text-gray-600 mt-2">{doctor.hospital}</p>
+            <DoctorAbout doctor={doctor}/>
 
           </div>
-
-          <div>
-            <SidePanel doctor={doctor}/>
-          </div>
-
+          <SidePanel doctor={doctor} />
         </div>
-
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default DoctorDetails
+export default DoctorDetails;

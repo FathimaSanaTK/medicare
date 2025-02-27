@@ -12,6 +12,7 @@ import MyBooking from '../profile/MyBooking';
 import DashboardRedirection from '../components/DashboardRedirection';
 import Admin from '../pages/Admin';
 import Success from '../components/Success';
+import DoctorAdd from '../admin/DoctorAdd'
 
 
 const Routers = () => {
@@ -29,7 +30,7 @@ const Routers = () => {
    <Route path='/redirect' element={<DashboardRedirection/>}/>
    <Route path='/admin' element={<Admin/>}/>
    <Route path='/success' element={<Success/>}/>
-
+   <Route path='/doctoradd' element={<DoctorAdd/>}/>
 
 
 

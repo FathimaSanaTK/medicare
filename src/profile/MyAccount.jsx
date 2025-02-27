@@ -1,4 +1,5 @@
 
+
 import React, { useEffect, useState } from 'react';
 import userimg from '../assets/images/avatar-icon.png';
 import { useNavigate } from 'react-router-dom';
@@ -20,7 +21,8 @@ const MyAccount = () => {
           const querySnapshot = await getDocs(q);
 
           if (!querySnapshot.empty) {
-            const userData = querySnapshot.docs[0].data();
+            const doc = querySnapshot.docs[0]; // Get the first matching document
+            const userData = { ...doc.data(), documentId: doc.id }; // Include documentId
             setUser(userData);
             setProfileImg(userData.photo || userimg);
           } else {
@@ -72,6 +74,9 @@ const MyAccount = () => {
             <div className="bg-white p-3 rounded-lg border">
               <strong>Allergy:</strong> {user?.allergy || "N/A"}
             </div>
+            <div className="bg-white p-3 rounded-lg border">
+              <strong>PatientId:</strong> {user?.documentId || "N/A"}
+            </div>
           </div>
 
           {/* Logout Button */}
@@ -92,3 +97,4 @@ const MyAccount = () => {
 };
 
 export default MyAccount;
+

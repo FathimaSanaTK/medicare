@@ -4,7 +4,7 @@ import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 //paypal
 const initialOptions = {
-  "client-id": "ARyP9BrZmef9l1HWiEFz9pwOXZPydBqMWYeopZQVehJI4s2vvANRK9SVcsSYCStc8qZaVdESRaCsu5r4",
+  "client-id": "ATSO-VjpC-750td4pmkUmy4FGhEPZFA22NcahubsmWM7rECj2Wh5W2e9hlOuEBFzDkSTCGgOIY83jdA6",
   currency: "USD",
   intent: "capture",
 };
