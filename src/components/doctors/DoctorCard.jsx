@@ -1,12 +1,14 @@
 
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import star from '../../assets/images/star.png';
 import { BsArrowRight } from 'react-icons/bs';
 
 const DoctorCard = ({ doctor, insideAdmin }) => {
   const { id, name, specialty, avgRating, photo, totalRating, hospital } = doctor;
+  const location = useLocation();
+  const isAdminPage = location.pathname.startsWith("/admin");
 
   return (
     <div className='p-3 lg:p-5 bg-white shadow-lg rounded-lg text-center'>
@@ -32,11 +34,12 @@ const DoctorCard = ({ doctor, insideAdmin }) => {
           >
             <BsArrowRight className='group-hover:text-white w-5 h-5' />
           </Link>
-          {insideAdmin && (
-            <button className='btn btn-outline border border-red-500 px-3 py-1 text-sm text-red-500 rounded-md hover:bg-red-500 hover:text-white'>
-              DELETE
-            </button>
-          )}
+
+          {isAdminPage &&
+          <button className='btn btn-outline border border-red-500 px-3 py-1 text-sm text-red-500 rounded-md hover:bg-red-500 hover:text-white'>
+            DELETE
+          </button>
+}
         </div>
       </div>
     </div>

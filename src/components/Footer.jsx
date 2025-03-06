@@ -16,8 +16,7 @@ function Footer() {
                 <img src={logo} alt="" />
               </h6>
               <p className=''>
-              World-class care for everyone. Our health System offers unmatched,
-                    expert health care
+              We offer Medicare-supported services, ensuring accessible and affordable healthcare for all eligible patients.
     
               </p>
             </MDBCol>

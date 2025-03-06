@@ -18,7 +18,7 @@ const Success = () => {
         Your Appointment is Successful!
       </h1>
       <p className="text-gray-600 text-lg mt-2 text-center">
-        You will receive a confirmation email with details.
+        You will receive a confirmation message on the day before appointment. Please ensure your confirmation by clicking "YES".
       </p>
 
       {/* Buttons */}

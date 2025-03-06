@@ -20,8 +20,8 @@ const About = () => {
 
             <div className='w-full lg:w-1/2 xl:w-[670px] order-1 lg:order-2  ml-9'>
                 <h2 className='heading'> Proud to be one of the nations best</h2>
-                <p className='text_para'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae magnam eveniet suscipit tempore non eius, aliquam reiciendis ad, excepturi exercitationem natus, cum dolorum officiis tempora. Sequi quis doloribus totam suscipit!</p>
-                <p className='text_para mt-3'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Atque quasi mollitia modi voluptatem qui tempore quibusdam nisi sed, consequatur recusandae similique alias explicabo debitis, aut rerum sit excepturi aspernatur unde!</p>
+                <p className='text_para'>We take pride in being one of the nation's leading healthcare platforms, connecting patients with top medical professionals. Our commitment to quality care, convenience, and innovation ensures that everyone receives the medical attention they deserve.</p>
+                <p className='text_para mt-3'>With a seamless appointment booking system and access to expert doctors, we strive to make healthcare more accessible. Your well-being is our priority, and we are dedicated to providing the best medical services to keep you healthy.</p>
 
                 <Link to={'/'}>
                     <button className='btn'>Learn More</button> 

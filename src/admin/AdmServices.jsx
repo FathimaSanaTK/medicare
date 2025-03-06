@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { firestore } from '../../firebase'; // Import Firebase Firestore instance
+import { firestore } from '../firebase'; // Import Firebase Firestore instance
 import { collection, getDocs } from 'firebase/firestore';
-import ServiceCard from './ServiceCard';
+import ServiceCard from '../components/services/ServiceCard';
+import { FaTrashAlt } from "react-icons/fa";
 
-const ServiceList = () => {
+const AdmServices = () => {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -39,4 +40,4 @@ const ServiceList = () => {
   );
 };
 
-export default ServiceList;
+export default AdmServices;

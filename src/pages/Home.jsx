@@ -27,9 +27,9 @@ const Home = () => {
                 <div className='lg:w-[570px]'>
                   <h1 className='text-[36px] leading-[36px] text-headingColor font-[800] md:text-[6
                     60px] md:leading-[70px]'>
-                    We help patients live a healthy,longer life
+                    We Help Patients Live a Healthy,Longer Life
                   </h1>
-                  <p className='text_para'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente, eligendi quo vitae alias expedita iusto est nisi dicta quis reprehenderit et soluta ut officiis nemo voluptas esse, optio dignissimos recusandae.</p>
+                  <p className='text_para'>We connect patients with experienced doctors, ensuring timely medical care for a healthier and longer life. Book appointments easily and take charge of your well-being today!</p>
                   
                   <Link to={'/doctors'}><button className='btn'>Request an Appointment</button>
                   </Link>
@@ -83,11 +83,10 @@ const Home = () => {
           <div className='container'>
             <div className='lg:w-[470px] mx-auto '>
               <h2 className='heading text-center'>
-                    Providing the best medical services
+                    Providing the Best Medical Services
               </h2>
               <p className='text_para text-center'>
-                    World-class care for everyone. Our health System offers unmatched,
-                    expert health care
+              We offer top-quality medical services by connecting you with experienced doctors, ensuring expert care and convenience. Your health is our priority!
               </p>
               </div>
 
@@ -102,8 +101,7 @@ const Home = () => {
                     Find Doctor
                   </h2>
                   <p className='text-textColor text-center font-[400]'>
-                  World-class care for everyone. Our health System offers unmatched,
-                    expert health care. From the lab to the clinic
+                  Easily find and book appointments with trusted doctors across various specialties, ensuring the best care for your needs.
                   </p>
                   <Link to='/doctors' className='w-[44px] h-[44px] rounded-full border border-solid border-blue-400 mt-[30px] mx-auto flex items-center 
                   justify-center group hover:bg-blue-600'> 
@@ -121,11 +119,10 @@ const Home = () => {
 
                 <div className='mt-[30px]'>
                   <h2 className='text-center text-headingColor font-[700]'>
-                    Find a Location
+                    Find Location
                   </h2>
                   <p className='text-textColor text-center font-[400]'>
-                  World-class care for everyone. Our health System offers unmatched,
-                    expert health care. From the lab to the clinic
+                  Locate our nearby clinics and hospitals easily with our integrated map feature, ensuring quick access to medical care.
                   </p>
                   <Link to='/doctors' className='w-[44px] h-[44px] rounded-full border border-solid border-blue-400 mt-[30px] mx-auto flex items-center 
                   justify-center group hover:bg-blue-600'> 
@@ -146,8 +143,7 @@ const Home = () => {
                     Book Appointment
                   </h2>
                   <p className='text-textColor text-center font-[400]'>
-                  World-class care for everyone. Our health System offers unmatched,
-                    expert health care. From the lab to the clinic
+                  Schedule your appointment with just a few clicks and get timely medical care at your convenience.
                   </p>
                   <Link to='/doctors' className='w-[44px] h-[44px] rounded-full border border-solid border-blue-400 mt-[30px] mx-auto flex items-center 
                   justify-center group hover:bg-blue-600'> 
@@ -175,8 +171,7 @@ const Home = () => {
               <h2 className='heading text-center'>Our Medical Services
 
               </h2>
-              <p className='text_para text-center'> World-class care for everyone. Our health System offers unmatched,
-                    expert health care </p>
+              <p className='text_para text-center'> We provide comprehensive medical services, including general consultations, specialist care, and diagnostic support, ensuring quality healthcare for all. </p>
 
             </div>
            <ServiceList/>
@@ -189,8 +184,7 @@ const Home = () => {
           <div className='container'>
           <div className='xl:w-[470px] mx-auto '>
               <h2 className='heading text-center'>Our Great Doctors </h2>
-              <p className='text_para text-center'> World-class care for everyone. Our health System offers unmatched,
-                    expert health care </p>
+              <p className='text_para text-center'> Our team of highly skilled and experienced doctors is dedicated to providing compassionate care and effective treatments for all patients. </p>
 
             </div>
           <DoctorList/>

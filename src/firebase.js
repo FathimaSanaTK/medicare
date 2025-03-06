@@ -7,12 +7,12 @@ import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyC-ZrBxBhH19qSId69D-o2YPTp9GXQxIFA",
-  authDomain: "medicareapp-11c2a.firebaseapp.com",
-  projectId: "medicareapp-11c2a",
-  storageBucket: "medicareapp-11c2a.firebasestorage.app",
-  messagingSenderId: "693555754203",
-  appId: "1:693555754203:web:94f0e6917160aeaef808fe"
+  apiKey: "AIzaSyC1eY8q5gvaWP3efbAtXRuvlydOeBHV-uc",
+  authDomain: "medicareapp-5a04e.firebaseapp.com",
+  projectId: "medicareapp-5a04e",
+  storageBucket: "medicareapp-5a04e.firebasestorage.app",
+  messagingSenderId: "658956686520",
+  appId: "1:658956686520:web:9680690300b013ad84904d"
 };
 
 // Initialize Firebase

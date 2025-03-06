@@ -10,10 +10,11 @@ import Services from '../pages/Services';
 import MyAccount from '../profile/MyAccount';
 import MyBooking from '../profile/MyBooking';
 import DashboardRedirection from '../components/DashboardRedirection';
-import Admin from '../pages/Admin';
 import Success from '../components/Success';
 import DoctorAdd from '../admin/DoctorAdd'
-
+import ServiceAdd from '../admin/ServiceAdd';
+import ServiceList from '../components/services/ServiceList';
+import AdminDashboard from '../admin/AdminDashboard';
 
 const Routers = () => {
   return  <Routes>
@@ -24,13 +25,14 @@ const Routers = () => {
    <Route path='/login' element={<Login/>}/>
    <Route path='/register' element={<Signup/>}/>
    <Route path='/contact' element={<Contact/>}/>
-   <Route path='/services' element={<Services/>}/>
+   <Route path='/services' element={<ServiceList/>}/>
    <Route path='/user/profile' element={<MyAccount/>}/>
    <Route path='/user/profile/bookings' element={<MyBooking/>}/>
    <Route path='/redirect' element={<DashboardRedirection/>}/>
-   <Route path='/admin' element={<Admin/>}/>
+   <Route path='/admin' element={<AdminDashboard/>}/>
    <Route path='/success' element={<Success/>}/>
-   <Route path='/doctoradd' element={<DoctorAdd/>}/>
+   <Route path='/admin/doctoradd' element={<DoctorAdd/>}/>
+   <Route path='/admin/serviceadd' element={<ServiceAdd/>}/>
 
 
 
