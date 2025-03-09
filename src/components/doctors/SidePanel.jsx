@@ -1,8 +1,6 @@
-
-
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, collection, query, where, getDocs } from "firebase/firestore";
 import { firestore } from "../../firebase";
 import Checkout from "../Checkout";
 import DatePicker from "react-datepicker";
@@ -16,6 +14,7 @@ const SidePanel = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [availableDates, setAvailableDates] = useState([]);
   const [timeSlots, setTimeSlots] = useState([]);
+  const [bookedSlots, setBookedSlots] = useState([]);
   const [selectedTimeslot, setSelectedTimeslot] = useState(null);
 
   useEffect(() => {
@@ -47,11 +46,33 @@ const SidePanel = () => {
     fetchDoctorDetails();
   }, [id]);
 
-  const handleDateChange = (date) => {
+  const handleDateChange = async (date) => {
     setSelectedDate(date);
     setSelectedTimeslot(null);
 
     const durationMinutes = (doctor?.duration || 1) * 60;
+
+    // Fetch booked slots for the selected date
+    const bookingsRef = collection(firestore, "bookings");
+    const q = query(
+      bookingsRef,
+      where("doctorId", "==", id)
+    );
+    const querySnapshot = await getDocs(q);
+    
+    const bookedTimes = querySnapshot.docs
+      .map((doc) => doc.data().timeslot)
+      .filter((timestamp) => {
+        const bookingDate = new Date(timestamp.seconds * 1000);
+        return bookingDate.toDateString() === date.toDateString();
+      })
+      .map((timestamp) => {
+        const bookingTime = new Date(timestamp.seconds * 1000);
+        return bookingTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+      });
+
+    setBookedSlots(bookedTimes);
+
     const selectedDaySlots = doctor?.timeslots
       ?.filter((slot) => new Date(slot.seconds * 1000).toDateString() === date.toDateString())
       .flatMap((slot) => {
@@ -59,7 +80,8 @@ const SidePanel = () => {
         let endTime = new Date(startTime.getTime() + durationMinutes * 60000);
         let slots = [];
         while (startTime < endTime) {
-          slots.push(startTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }));
+          let slotTime = startTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+          slots.push(slotTime);
           startTime = new Date(startTime.getTime() + 10 * 60000);
         }
         return slots;
@@ -100,19 +122,25 @@ const SidePanel = () => {
               <p className="font-medium text-gray-700">Select Time Slot:</p>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-2">
                 {timeSlots.length > 0 ? (
-                  timeSlots.map((slot, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setSelectedTimeslot(slot)}
-                      className={`p-2 text-sm font-semibold border rounded-md text-center transition duration-200 ease-in-out ${
-                        selectedTimeslot === slot
-                          ? "bg-blue-500 text-white"
-                          : "bg-gray-100 hover:bg-gray-200"
-                      }`}
-                    >
-                      {slot}
-                    </button>
-                  ))
+                  timeSlots.map((slot, index) => {
+                    const isBooked = bookedSlots.includes(slot);
+                    return (
+                      <button
+                        key={index}
+                        onClick={() => !isBooked && setSelectedTimeslot(slot)}
+                        className={`p-2 text-sm font-semibold border rounded-md text-center transition duration-200 ease-in-out ${
+                          isBooked
+                            ? "bg-gray-300 text-gray-500 cursor-not-allowed opacity-50"
+                            : selectedTimeslot === slot
+                            ? "bg-blue-500 text-white"
+                            : "bg-gray-100 hover:bg-gray-200"
+                        }`}
+                        disabled={isBooked}
+                      >
+                        {slot}
+                      </button>
+                    );
+                  })
                 ) : (
                   <p className="text-gray-500 text-sm col-span-3">No available slots</p>
                 )}
@@ -132,4 +160,3 @@ const SidePanel = () => {
 };
 
 export default SidePanel;
-

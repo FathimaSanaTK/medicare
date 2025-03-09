@@ -5,6 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import signup from '../assets/images/loginp.gif';
 import { collection, getDocs, query, where } from '@firebase/firestore';
 import { firestore } from '../firebase'; // Ensure correct import
+import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -31,7 +33,11 @@ const Login = () => {
 
                 // Check password
                 if (userData.password === formData.password) {
-                    alert("Login Successful!");
+                    // alert("Login Successful!");
+                    toast.success("Login Successful!", {
+                        position: "top-right",
+                        autoClose: 3000, // Toast disappears after 3s
+                      })
 
                     // Store email and user ID in sessionStorage
                     sessionStorage.setItem("email", formData.email);
@@ -39,10 +45,27 @@ const Login = () => {
 
                     navigate('/doctors'); // Redirect to home page
                 } else {
-                    alert("Incorrect password. Please try again.");
+                    toast.error("Incorrect password. Please try again.", {
+                        position: "top-right", // You can change this to "top-center", "bottom-right", etc.
+                        autoClose: 3000, // Closes after 3 seconds
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        theme: "colored",
+                      });
                 }
             } else {
-                alert("Email not registered. Please sign up.");
+                toast.error("Email not registered. Please sign up.", {
+                    position: "top-right",  // Position of the toast
+                    autoClose: 3000,        // Closes after 3 seconds
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    theme: "colored",
+                  });
+                  
                 navigate('/register'); // Redirect to registration page
             }
         } catch (error) {

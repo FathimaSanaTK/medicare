@@ -6,6 +6,8 @@ import profile from '../assets/images/doctor-img02.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { firestore } from '../firebase';
 import { addDoc, collection, getDocs, query, where } from '@firebase/firestore';
+import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
   const [url, setUrl] = useState("");  // Stores uploaded image URL
@@ -67,7 +69,17 @@ const Signup = () => {
       const querySnapshot = await getDocs(q);
 
       if (!querySnapshot.empty) {
-        alert("This email is already registered. Please log in instead.");
+        toast.info("This email is already registered. Please log in instead.", {
+          position: "top-right",
+          autoClose: 3000, // Closes after 3 seconds
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored",
+        });
+        
+        navigate('/login');
         return;
       }
 
@@ -84,7 +96,16 @@ const Signup = () => {
         allergy: ""
       });
 
-      alert("Registration successful!");
+      toast.success("Registration successful!", {
+        position: "top-right",
+        autoClose: 3000, // Closes after 3 seconds
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
+      
       navigate('/login');
     } catch (error) {
       console.error("Error registering user:", error);

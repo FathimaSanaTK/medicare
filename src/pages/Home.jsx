@@ -16,6 +16,9 @@ import DoctorList from '../components/doctors/DoctorList'
 
 
 const Home = () => {
+
+  const user=sessionStorage.getItem("email");
+
   return (
     <>
       {/* hero section */}
@@ -31,9 +34,11 @@ const Home = () => {
                   </h1>
                   <p className='text_para'>We connect patients with experienced doctors, ensuring timely medical care for a healthier and longer life. Book appointments easily and take charge of your well-being today!</p>
                   
+                  {user?(
                   <Link to={'/doctors'}><button className='btn'>Request an Appointment</button>
+                  </Link>):<Link to={'/login'}><button className='btn'>Request an Appointment</button>
                   </Link>
-                  
+                  }
                   </div>
 
                   <div className='flex'>

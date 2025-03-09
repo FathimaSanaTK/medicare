@@ -46,7 +46,7 @@ const DoctorDetails = () => {
               <img src={doctor.photo} alt={doctor.name} className="w-full rounded-md" />
             </figure>
             <h3 className="text-headingColor text-[22px] font-bold">{doctor.name}</h3>
-            <p className="text-[14px] text-gray-600 mt-2">{doctor.hospital}</p>
+            <p className="text-[14px] text-gray-600 mt-2">{doctor.specialty}</p>
             <DoctorAbout doctor={doctor}/>
 
           </div>
