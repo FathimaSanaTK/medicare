@@ -13,8 +13,8 @@ const FeedbackForm = ({form}) => {
 
   
   useEffect(()=>{
-    if(sessionStorage.getItem("token")){
-      setToken(sessionStorage.getItem("token"))
+    if(localStorage.getItem("token")){
+      setToken(localStorage.getItem("token"))
     }
     else{
       setToken("")

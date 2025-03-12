@@ -21,7 +21,7 @@ const Header = () => {
   const menuRef = useRef(null);
   const navigate = useNavigate();
   const [profileImg, setProfileImg] = useState(userimg); // Default avatar
-  const userEmail = sessionStorage.getItem("email"); // Get logged-in user email
+  const userEmail = localStorage.getItem("email"); // Get logged-in user email
 
   // Sticky Header on Scroll
   const handleStickyHeader = () => {
@@ -98,14 +98,21 @@ const Header = () => {
           {/* User Profile Section */}
           <div className="flex items-center gap-4">
             {userEmail ? (
-              <figure className="w-[35px] h-[35px] rounded-full cursor-pointer">
-                <img
-                  src={profileImg}
-                  alt="User Profile"
-                  onClick={profile}
-                  className="w-full h-full rounded-full"
-                />
+              <button 
+              onClick={profile} 
+              className="flex items-center gap-2 px-3 py-1 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 transition duration-300"
+          >
+              <figure className="w-[30px] h-[30px] rounded-full border-2 border-white overflow-hidden">
+                  <img
+                      src={profileImg}
+                      alt="User Profile"
+                      className="w-full h-full rounded-full"
+                  />
               </figure>
+              <span className="text-sm font-medium">View Profile</span>
+          </button>
+          
+          
             ) : (
               <Link to={"/login"}>
                 <button className="bg-primaryColor py-2 px-6 text-white font-[600] h-[44px] flex items-center justify-center rounded-[50px]">

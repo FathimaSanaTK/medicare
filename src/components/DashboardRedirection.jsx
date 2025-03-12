@@ -5,7 +5,7 @@ const DashboardRedirection = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const role = sessionStorage.getItem('role');
+    const role = localStorage.getItem('role');
     console.log("inside Dashboard redirect", role)
 
     if (role) {

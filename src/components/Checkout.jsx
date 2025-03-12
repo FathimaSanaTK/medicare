@@ -1,94 +1,40 @@
 
+
 import React, { useState } from "react";
-import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import { useNavigate } from "react-router-dom";
 import { firestore } from "../firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import { Timestamp } from "firebase/firestore"; 
+import { Timestamp } from "firebase/firestore";
 
-const Checkout = ({ doctorId, doctor, selectedTimeslot, selectedDate }) => {
-    const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
-    const [currency, setCurrency] = useState(options.currency);
-    const patientId = sessionStorage.getItem("userid");
+
+const Checkout = ({ doctorId, doctor, selectedTimeslot, selectedDate , pid }) => {
+    const [showDialog, setShowDialog] = useState(false);
+    const patientId = pid;
     const navigate = useNavigate();
     const auth = getAuth();
     const user = auth.currentUser;
 
-    const onCurrencyChange = ({ target: { value } }) => {
-        setCurrency(value);
-        dispatch({
-            type: "resetOptions",
-            value: {
-                ...options,
-                currency: value,
-            },
-        });
-    };
-
-    const onCreateOrder = (data, actions) => {
-        return actions.order.create({
-            purchase_units: [
-                {
-                    amount: {
-                        value: doctor.fee, 
-                    },
-                },
-            ],
-        });
-    };
-
-    const onApproveOrder = async (data, actions) => {
-        return actions.order.capture().then(async (details) => {
-            console.log(`Transaction completed by ${details.payer.name.given_name}`);
-
-            // Booking the appointment in Firestore
-            if (patientId) {
-                const success = await handleBooking();
-                if (success) {
-                    navigate('/success');
-                } else {
-                    console.error("Booking failed, staying on page.");
-                }
-            } else {
-                console.error("Patient ID not found");
-            }
-        });
-    };
-
     const handleBooking = async () => {
         try {
-            // Check for missing values
             if (!selectedDate || !selectedTimeslot || !doctorId || !patientId) {
-                console.error("Missing booking details", { selectedDate, selectedTimeslot, doctorId, patientId });
+                console.error("Missing booking details");
                 return false;
             }
 
-            console.log("Selected Date:", selectedDate);
-            console.log("Selected Timeslot:", selectedTimeslot);
-
-            // Extract hours and minutes from selectedTimeslot
             const [time, period] = selectedTimeslot.split(" ");
             const [hours, minutes] = time.split(":").map(Number);
-
-            // Convert 12-hour format to 24-hour format
             let formattedHours = period === "PM" && hours !== 12 ? hours + 12 : hours;
-            if (period === "AM" && hours === 12) formattedHours = 0; 
+            if (period === "AM" && hours === 12) formattedHours = 0;
 
-            // Create a Date object using selectedDate
             const selectedDateTime = new Date(selectedDate);
             selectedDateTime.setHours(formattedHours, minutes, 0);
-
             if (isNaN(selectedDateTime.getTime())) {
                 throw new Error("Invalid date-time value");
             }
 
-            console.log("Final Date-Time Object:", selectedDateTime);
-
-            // Convert to Firestore Timestamp
             const timeslotTimestamp = Timestamp.fromDate(selectedDateTime);
 
-            // Save booking in Firestore
             await addDoc(collection(firestore, "bookings"), {
                 doctorId,
                 patientId,
@@ -97,32 +43,52 @@ const Checkout = ({ doctorId, doctor, selectedTimeslot, selectedDate }) => {
                 createdAt: Timestamp.now(),
             });
 
-            console.log("Booking successfully added to Firestore");
-            return true;
+            navigate("/success");
         } catch (error) {
             console.error("Error adding booking:", error);
-            return false;
         }
     };
 
     return (
-        <div className="checkout">
-            {isPending ? <p>LOADING...</p> : (
-                <>
-                    <select value={currency} onChange={onCurrencyChange}>
-                        <option value="USD">💵 USD</option>
-                        <option value="EUR">💶 Euro</option>
-                        <option value="INR">🇮🇳 INR</option>
-                    </select>
-                    <PayPalButtons
-                        style={{ layout: "vertical" }}
-                        createOrder={onCreateOrder}
-                        onApprove={onApproveOrder}
-                    />
-                </>
+        <div className="flex flex-col items-center justify-center p-1 ">
+            <h2 className="text-2l text-white bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 px-6 py-3 rounded-lg shadow-md text-center mb-3">
+    Confirm Your Booking by Clicking Below
+</h2>
+
+            <button
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700" 
+                onClick={() => setShowDialog(true)}
+            >
+                Confirm Booking
+            </button>
+
+            {showDialog && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+                        <p className="text-lg font-medium mb-4">
+                            Are you sure you want to confirm this booking?
+                        </p>
+                        <div className="flex justify-center gap-4">
+                            <button
+                                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                                onClick={handleBooking}
+                            >
+                                Yes
+                            </button>
+                            <button
+                                className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+                                onClick={() => setShowDialog(false)}
+                            >
+                                No
+                            </button>
+                        </div>
+                    </div>
+                </div>
             )}
         </div>
     );
 };
 
 export default Checkout;
+
+

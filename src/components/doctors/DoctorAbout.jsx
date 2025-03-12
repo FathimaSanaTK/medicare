@@ -40,15 +40,12 @@ const DoctorAbout = ({doctor}) => {
     <h3 className='items-center text-headingColor font-semibold'>Experience</h3>
 
     <ul className='pt-4 md:p-5 grid sm:grid-cols-2 gap-[30px]'>
-        <li className='p-2 rounded bg-green-300'>
-            <span className=' text-primaryColor leading-6 text-[15px]'>
-               {doctor.experience} Years
+    <li className="p-2 rounded-lg bg-gradient-to-r from-pink-400 to-red-400 text-white shadow-md flex items-center">
+    <span className="text-lg font-semibold">
+        {doctor.experience} Years
+    </span>
+</li>
 
-            </span>
-           
-                    
-
-        </li>
 
     </ul>
 

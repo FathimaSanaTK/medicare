@@ -3,17 +3,19 @@ import userimg from "../assets/images/avatar-icon.png";
 import { useNavigate } from "react-router-dom";
 import MyBooking from "./MyBooking";
 import { firestore } from "../firebase";
-import { collection, query, where, getDocs, doc, updateDoc } from "firebase/firestore";
+import { collection, query, where, getDocs, doc, updateDoc, documentId } from "firebase/firestore";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Checkout from "../components/Checkout";
 
 const MyAccount = () => {
   const [user, setUser] = useState(null);
+  const [pid, setPid] = useState();
   const [profileImg, setProfileImg] = useState(userimg);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [updatedUser, setUpdatedUser] = useState({});
   const navigate = useNavigate();
-  const userEmail = sessionStorage.getItem("email");
+  const userEmail = localStorage.getItem("email");
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -25,6 +27,9 @@ const MyAccount = () => {
           if (!querySnapshot.empty) {
             const doc = querySnapshot.docs[0];
             const userData = { ...doc.data(), documentId: doc.id };
+            setPid(userData.documentId)
+        
+            
             setUser(userData);
             setUpdatedUser(userData);
             setProfileImg(userData.photo || userimg);
@@ -34,12 +39,13 @@ const MyAccount = () => {
         }
       }
     };
-
+    console.log(pid);
+    
     fetchUserProfile();
   }, [userEmail]);
 
   const handleLogout = () => {
-    sessionStorage.clear();
+    localStorage.clear();
     toast.success("Successfully logged out!", { position: "top-right", autoClose: 3000 });
     navigate("/login");
   };
@@ -111,9 +117,12 @@ const MyAccount = () => {
               <button onClick={handleSave} className="px-4 py-2 bg-green-500 text-white rounded">Save</button>
             </div>
           </div>
+          <Checkout pid={pid} />
         </div>
+       
       )}
     </section>
+
   );
 };
 

@@ -2,6 +2,11 @@ import React from 'react'
 import heroimg1 from '../assets/images/hero-img01.png'
 import heroimg2 from '../assets/images/hero-img02.png'
 import heroimg3 from '../assets/images/hero-img03.png'
+//import docarun from '../assets/images/docarun.jpg'
+// import doc4 from '../assets/images/doc4.webp'
+// import doc2 from '../assets/images/doc2.jpeg'
+// import doc8 from '../assets/images/doc2.jpeg'
+// import doc5 from '../assets/images/doc5.jpeg'
 import icon1 from '../assets/images/icon01.png'
 import icon2 from '../assets/images/icon02.png'
 import icon3 from '../assets/images/icon03.png'
@@ -17,7 +22,7 @@ import DoctorList from '../components/doctors/DoctorList'
 
 const Home = () => {
 
-  const user=sessionStorage.getItem("email");
+  const user=localStorage.getItem("email");
 
   return (
     <>
@@ -41,28 +46,29 @@ const Home = () => {
                   }
                   </div>
 
-                  <div className='flex'>
+                  <div className='flex flex-wrap justify-center gap-6 mt-8'>
+  <div className='flex flex-col items-center text-center'>
+    <div className='bg-red-500 text-white text-4xl font-extrabold w-24 h-24 flex items-center justify-center rounded-full shadow-lg'>
+      30+
+    </div>
+    <p className='mt-3 text-lg font-medium text-black'>Years of Experience</p>
+  </div>
 
-                  <div className='m-4 text-center'>
-                    <h2 className='text-headingColor bg-red-500'>30+</h2>
-                    <span></span>
-                    <p className='text-black text-center'>Years of Experience</p>
-                  </div>
+  <div className='flex flex-col items-center text-center'>
+    <div className='bg-amber-300 text-white text-4xl font-extrabold w-24 h-24 flex items-center justify-center rounded-full shadow-lg'>
+      15+
+    </div>
+    <p className='mt-3 text-lg font-medium text-black'>Clinic Locations</p>
+  </div>
 
-                  <div className='m-4 text-center'>
-                    <h2 className='text-headingColor bg-amber-300'>15+</h2>
-                    <span></span>
-                    <p className='text-black'>Clinic Location</p>
-                  </div>
+  <div className='flex flex-col items-center text-center'>
+    <div className='bg-green-500 text-white text-4xl font-extrabold w-24 h-24 flex items-center justify-center rounded-full shadow-lg'>
+      100%
+    </div>
+    <p className='mt-3 text-lg font-medium text-black'>Patient Satisfaction</p>
+  </div>
+</div>
 
-                  <div className='m-4 text-center'>
-                    <h2 className='text-headingColor bg-green-500'>100%</h2>
-                    <span></span>
-                    <p className='text-black'>Patient Satisfaction</p>
-                  </div>
-
-
-                  </div>
               </div>
                
               <div className='flex gap-[30px] justify-end'>
