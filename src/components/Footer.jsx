@@ -1,106 +1,107 @@
-import React from 'react'
+
+
+import React from 'react';
 import { MDBFooter, MDBContainer, MDBRow, MDBCol, MDBIcon } from 'mdb-react-ui-kit';
-import logo from '../assets/images/logo.png'
+import logo from '../assets/images/logo.png';
 
 function Footer() {
   return (
-    <div>
-      <MDBFooter className=' m-3 text-center text-lg-start text-dark '>
-      {}
-
-      <section className='mt-3'>
-        <MDBContainer className='text-center text-md-start mt-5'>
-          <MDBRow className='mt-3'>
+    <MDBFooter className='m-3 text-center text-lg-start text-dark bg-light'>
+      <section className='py-4'>
+        <MDBContainer className='text-center text-md-start'>
+          <MDBRow>
+            {/* About Section */}
             <MDBCol md="3" lg="4" xl="3" className='mx-auto mb-4'>
               <h6 className='text-uppercase fw-bold mb-4'>
-                <img src={logo} alt="" />
+                <img src={logo} alt="Medicare Logo" width={150} />
               </h6>
               <p className=''>
-              We offer Medicare-supported services, ensuring accessible and affordable healthcare for all eligible patients.
-    
+                Your trusted partner in healthcare, providing top-quality medical services with expert doctors and modern facilities.
               </p>
             </MDBCol>
 
+            {/* Quick Links */}
             <MDBCol md="2" lg="2" xl="2" className='mx-auto mb-4'>
-              <h6 className='text-uppercase fw-bold mb-4'>Links</h6>
+              <h6 className='text-uppercase fw-bold mb-4'>Explore</h6>
               <p>
-              <a href='/doctors' className='text-dark' style={{textDecoration:'none'}}>
-                 Find a Doctor
+                <a href='/doctors' className='text-dark' style={{ textDecoration: 'none' }}>
+                  Find a Doctor
                 </a>
               </p>
               <p>
-              <a href='/services' className='text-dark' style={{textDecoration:'none'}}>
-                  Services
+                <a href='/services' className='text-dark' style={{ textDecoration: 'none' }}>
+                  Our Services
                 </a>
               </p>
               <p>
-              <a href='/contact' className='text-dark' style={{textDecoration:'none'}}>
-                  Contact
+                <a href='/doctors' className='text-dark' style={{ textDecoration: 'none' }}>
+                  Book an Appointment
                 </a>
               </p>
-              
+              <p>
+                <a href='/contact' className='text-dark' style={{ textDecoration: 'none' }}>
+                  Contact Us
+                </a>
+              </p>
             </MDBCol>
 
+            {/* Support Section */}
             <MDBCol md="3" lg="2" xl="2" className='mx-auto mb-4'>
-              <h6 className='text-uppercase fw-bold mb-4'>Guides</h6>
+              <h6 className='text-uppercase fw-bold mb-4'>Support</h6>
               <p>
-              <a href='https://react.dev/' className='text-dark' style={{textDecoration:'none'}}>
-                  React
+                <a href='/faqs' className='text-dark' style={{ textDecoration: 'none' }}>
+                  FAQs
                 </a>
               </p>
               <p>
-              <a href='https://react-bootstrap.github.io/' className='text-dark' style={{textDecoration:'none'}}>
-                  React Bootsrap
+                <a href='/privacy-policy' className='text-dark' style={{ textDecoration: 'none' }}>
+                  Privacy Policy
                 </a>
               </p>
               <p>
-                <a href='https://bootswatch.com/' className='text-dark' style={{textDecoration:'none'}}>
-                  Bootswatch
+                <a href='/terms-of-service' className='text-dark' style={{ textDecoration: 'none' }}>
+                  Terms of Service
                 </a>
               </p>
-              
+              <p>
+                <a href='/patient-guide' className='text-dark' style={{ textDecoration: 'none' }}>
+                  Patient Guide
+                </a>
+              </p>
             </MDBCol>
 
+            {/* Subscribe & Social Links */}
             <MDBCol md="4" lg="3" xl="3" className='mx-auto mb-md-0 mb-4'>
-              <h6 className='text-uppercase fw-bold mb-4'>Contact Us</h6>
-              <div>
-              <div>
-              <input className='mb-3 me-2 border rounded' type="text" placeholder='Enter Your Email ID' />
-              <button style={{backgroundColor:'orange'}} className='border rounded'>Subscribe</button>
-              
+              <h6 className='text-uppercase fw-bold mb-4'>Stay Connected</h6>
+              <div className='mb-3 d-flex'>
+                <input className='form-control me-2' type="email" placeholder='Enter Your Email' />
+                <button className='btn btn-warning'>Subscribe</button>
               </div>
-              <div className=''>
-          <a href='/' className='m-4 text-dark'>
-            <MDBIcon fab icon="facebook-f" />
-          </a>
-          <a href='/' className='m-4 text-dark'>
-            <MDBIcon fab icon="twitter" />
-          </a>
-          
-          <a href='/' className='m-4 text-dark '>
-            <MDBIcon fab icon="instagram" />
-          </a>
-          <a href='/' className='m-4 text-dark'>
-            <MDBIcon fab icon="linkedin" />
-          </a>
-          
-        </div>
-        </div>
-             
+              <div className='d-flex justify-content-center'>
+                <a href='/' className='me-3 text-dark'>
+                  <MDBIcon fab icon="facebook-f" />
+                </a>
+                <a href='/' className='me-3 text-dark'>
+                  <MDBIcon fab icon="twitter" />
+                </a>
+                <a href='/' className='me-3 text-dark'>
+                  <MDBIcon fab icon="instagram" />
+                </a>
+                <a href='/' className='me-3 text-dark'>
+                  <MDBIcon fab icon="linkedin" />
+                </a>
+              </div>
             </MDBCol>
           </MDBRow>
         </MDBContainer>
       </section>
 
-      <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.05)' }}>
-        © 2024 Copyright:
-        <a className='text-reset fw-bold' href='/' style={{textDecoration:'none'}}>
-          medicare.com
-        </a>
+      {/* Copyright Section */}
+      <div className='text-center p-3' style={{ backgroundColor: 'rgba(0, 0, 0, 0.05)' }}>
+        © 2024 Medicare | <a className='text-reset fw-bold' href='/' style={{ textDecoration: 'none' }}>medicare.com</a>
       </div>
     </MDBFooter>
-    </div>
-  )
+  );
 }
 
-export default Footer
+export default Footer;

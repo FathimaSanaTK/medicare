@@ -1,4 +1,4 @@
-import "./app.css";
+// import "../app.css";
 import Layout from "./layout/Layout";
 import ScrollToTop from "./components/ScrollToTop"; // Import it
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
