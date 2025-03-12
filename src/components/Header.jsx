@@ -5,7 +5,7 @@ import logo from "../assets/images/logo.png";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import userimg from "../assets/images/avatar-icon.png";
 import { BiMenu } from "react-icons/bi";
-import "../app.css";
+//import "../app.css";
 import { firestore } from "../firebase"; // Import Firebase config
 import { collection, query, where, getDocs } from "firebase/firestore";
 
