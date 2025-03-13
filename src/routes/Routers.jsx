@@ -15,6 +15,7 @@ import DoctorAdd from '../admin/DoctorAdd'
 import ServiceAdd from '../admin/ServiceAdd';
 import ServiceList from '../components/services/ServiceList';
 import AdminDashboard from '../admin/AdminDashboard';
+import Devportel from '../admin/Devportel';
 
 const Routers = () => {
   return  <Routes>
@@ -33,6 +34,7 @@ const Routers = () => {
    <Route path='/success' element={<Success/>}/>
    <Route path='/admin/doctoradd' element={<DoctorAdd/>}/>
    <Route path='/admin/serviceadd' element={<ServiceAdd/>}/>
+   <Route path='/superadmin' element={<Devportel/>}/>
 
 
 

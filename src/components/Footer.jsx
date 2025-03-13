@@ -49,22 +49,22 @@ function Footer() {
             <MDBCol md="3" lg="2" xl="2" className='mx-auto mb-4'>
               <h6 className='text-uppercase fw-bold mb-4'>Support</h6>
               <p>
-                <a href='/faqs' className='text-dark' style={{ textDecoration: 'none' }}>
+                <a href='#' className='text-dark' style={{ textDecoration: 'none' }}>
                   FAQs
                 </a>
               </p>
               <p>
-                <a href='/privacy-policy' className='text-dark' style={{ textDecoration: 'none' }}>
+                <a href='#' className='text-dark' style={{ textDecoration: 'none' }}>
                   Privacy Policy
                 </a>
               </p>
               <p>
-                <a href='/terms-of-service' className='text-dark' style={{ textDecoration: 'none' }}>
+                <a href='#' className='text-dark' style={{ textDecoration: 'none' }}>
                   Terms of Service
                 </a>
               </p>
               <p>
-                <a href='/patient-guide' className='text-dark' style={{ textDecoration: 'none' }}>
+                <a href='#' className='text-dark' style={{ textDecoration: 'none' }}>
                   Patient Guide
                 </a>
               </p>

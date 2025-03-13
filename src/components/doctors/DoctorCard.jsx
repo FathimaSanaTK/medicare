@@ -1,260 +1,42 @@
-// // // import React from 'react';
-// // // import { Link, useLocation } from 'react-router-dom';
-// // // import star from '../../assets/images/star.png';
-
-// // // const DoctorCard = ({ doctor }) => {
-// // //   const { id, name, specialty, avgRating, photo, hospital } = doctor;
-// // //   const user = localStorage.getItem("email");
-// // //   const location = useLocation();
-// // //   const isAdminPage = location.pathname.startsWith("/admin");
-
-// // //   return (
-// // //     <div className='p-3 lg:p-5 bg-white shadow-lg rounded-lg text-center'>
-// // //       <div className='w-full h-56 overflow-hidden rounded-md'>
-// // //         <img src={photo} className='w-full h-full object-cover' alt={name} />
-// // //       </div>
-
-// // //       <h2 className='text-[18px] font-semibold mt-3'>{name}</h2>
-// // //       <div className='flex justify-between items-center mt-2'>
-// // //         <span className='bg-[#CCF0F3] px-3 py-1 rounded-md text-sm'>{specialty}</span>
-// // //         <div className='flex items-center gap-1'>
-// // //           <img src={star} className='w-4 h-4' alt='rating' />
-// // //           <span className='text-sm font-medium'>{avgRating}</span>
-// // //         </div>
-// // //       </div>
-
-// // //       <div className='mt-2'>
-// // //         <span className='text-gray-600 text-sm'>{hospital}</span>
-// // //         <div className='flex justify-center gap-4 mt-3'>
-
-// // //           {!isAdminPage && ( // Hide "Book Now" button on admin page
-// // //             user ? (
-// // //               <Link to={`/doctors/${id}`}>
-// // //                 <button className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-blue-700 whitespace-nowrap">
-// // //                   Book Now
-// // //                 </button>
-// // //               </Link>
-// // //             ) : (
-// // //               <Link to={`/login`}>
-// // //                 <button className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-blue-700 whitespace-nowrap">
-// // //                   Book Now
-// // //                 </button>
-// // //               </Link>
-// // //             )
-// // //           )}
-
-// // //           {isAdminPage && (
-// // //             <div>
-// // //               <button className='border border-blue-500 px-3 py-1 text-sm text-blue-500 rounded-md hover:bg-blue-500 hover:text-white'>
-// // //               EDIT
-// // //             </button>
-// // //             <button className='border border-red-500 px-3 py-1 text-sm text-red-500 rounded-md hover:bg-red-500 hover:text-white'>
-// // //               DELETE
-// // //             </button>
-// // //             </div>
-// // //           )}
-
-// // //         </div>
-// // //       </div>
-// // //     </div>
-// // //   );
-// // // };
-
-// // // export default DoctorCard;
-// // import React, { useState } from "react";
-// // import { Link, useLocation } from "react-router-dom";
-// // import Modal from "react-modal";
-// // import { toast } from "react-toastify";
-// // import star from "../../assets/images/star.png";
-// // import { firestore } from "../../firebase";
-// // import { doc, updateDoc, deleteDoc } from "firebase/firestore";
-
-// // Modal.setAppElement("#root"); // Prevent accessibility warning
-
-// // const DoctorCard = ({ doctor, onDoctorUpdated, onDoctorDeleted }) => {
-// //   const {
-// //     id,
-// //     name,
-// //     about,
-// //     specialty,
-// //     avgRating,
-// //     totalRating,
-// //     photo,
-// //     totalPatients,
-// //     hospital,
-// //     duration,
-// //     education,
-// //     experience,
-// //     fee,
-// //     timeslots,
-// //   } = doctor;
-
-// //   const user = sessionStorage.getItem("email");
-// //   const location = useLocation();
-// //   const isAdminPage = location.pathname.startsWith("/admin");
-
-// //   // State for edit modal
-// //   const [isModalOpen, setIsModalOpen] = useState(false);
-// //   const [editedDoctor, setEditedDoctor] = useState({ ...doctor });
-
-// //   // Handle input change
-// //   const handleChange = (e) => {
-// //     const { name, value } = e.target;
-// //     setEditedDoctor({ ...editedDoctor, [name]: value });
-// //   };
-
-// //   // Handle doctor update
-// //   const handleUpdate = async () => {
-// //     try {
-// //       const doctorRef = doc(firestore, "doctors", id);
-// //       await updateDoc(doctorRef, { ...editedDoctor });
-// //       toast.success("Doctor details updated successfully!");
-// //       onDoctorUpdated(id, editedDoctor); // Update UI without refresh
-// //       setIsModalOpen(false);
-// //     } catch (error) {
-// //       console.error("Error updating doctor:", error);
-// //       toast.error("Failed to update doctor.");
-// //     }
-// //   };
-
-// //   // Handle doctor delete
-// //   const handleDelete = async () => {
-// //     const confirmDelete = window.confirm("Are you sure you want to delete this doctor?");
-// //     if (confirmDelete) {
-// //       try {
-// //         const doctorRef = doc(firestore, "doctors", id);
-// //         await deleteDoc(doctorRef);
-// //         toast.success("Doctor deleted successfully!");
-// //         onDoctorDeleted(id); // Remove doctor from UI instantly
-// //       } catch (error) {
-// //         console.error("Error deleting doctor:", error);
-// //         toast.error("Failed to delete doctor.");
-// //       }
-// //     }
-// //   };
-
-// //   return (
-// //     <div className="p-3 lg:p-5 bg-white shadow-lg rounded-lg text-center">
-// //       <div className="w-full h-56 overflow-hidden rounded-md">
-// //         <img src={photo} className="w-full h-full object-cover" alt={name} />
-// //       </div>
-
-// //       <h2 className="text-[18px] font-semibold mt-3">{name}</h2>
-// //       <div className="flex justify-between items-center mt-2">
-// //         <span className="bg-[#CCF0F3] px-3 py-1 rounded-md text-sm">{specialty}</span>
-// //         <div className="flex items-center gap-1">
-// //           <img src={star} className="w-4 h-4" alt="rating" />
-// //           <span className="text-sm font-medium">{avgRating}</span>
-// //         </div>
-// //       </div>
-
-// //       <div className="mt-2">
-// //         <span className="text-gray-600 text-sm">{hospital}</span>
-// //         <div className="flex justify-center gap-4 mt-3">
-// //           {!isAdminPage &&
-// //             (user ? (
-// //               <Link to={`/doctors/${id}`}>
-// //                 <button className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-blue-700 whitespace-nowrap">
-// //                   Book Now
-// //                 </button>
-// //               </Link>
-// //             ) : (
-// //               <Link to={`/login`}>
-// //                 <button className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-blue-700 whitespace-nowrap">
-// //                   Book Now
-// //                 </button>
-// //               </Link>
-// //             ))}
-
-// //           {isAdminPage && (
-// //             <div>
-// //               <button
-// //                 className="border border-blue-500 px-3 py-1 text-sm text-blue-500 rounded-md hover:bg-blue-500 hover:text-white"
-// //                 onClick={() => setIsModalOpen(true)}
-// //               >
-// //                 EDIT
-// //               </button>
-// //               <button
-// //                 className="border border-red-500 px-3 py-1 text-sm text-red-500 rounded-md hover:bg-red-500 hover:text-white ml-2"
-// //                 onClick={handleDelete}
-// //               >
-// //                 DELETE
-// //               </button>
-// //             </div>
-// //           )}
-// //         </div>
-// //       </div>
-
-// //       {/* Edit Modal */}
-// //       <Modal
-// //         isOpen={isModalOpen}
-// //         onRequestClose={() => setIsModalOpen(false)}
-// //         className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
-// //       >
-// //         <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
-// //           <h2 className="text-xl font-semibold mb-4">Edit Doctor Details</h2>
-// //           <div className="space-y-3">
-// //             <input type="text" name="name" value={editedDoctor.name} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Name" />
-// //             <input type="text" name="about" value={editedDoctor.about} onChange={handleChange} className="w-full p-2 border rounded" placeholder="About" />
-// //             <input type="text" name="specialty" value={editedDoctor.specialty} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Specialty" />
-// //             <input type="number" name="avgRating" value={editedDoctor.avgRating} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Average Rating" />
-// //             <input type="number" name="totalRating" value={editedDoctor.totalRating} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Total Rating" />
-// //             <input type="text" name="photo" value={editedDoctor.photo} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Photo URL" />
-// //             <input type="text" name="totalPatients" value={editedDoctor.totalPatients} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Total Patients" />
-// //             <input type="text" name="hospital" value={editedDoctor.hospital} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Hospital" />
-// //             <input type="text" name="duration" value={editedDoctor.duration} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Duration" />
-// //             <input type="text" name="education" value={editedDoctor.education} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Education" />
-// //             <input type="text" name="experience" value={editedDoctor.experience} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Experience" />
-// //             <input type="number" name="fee" value={editedDoctor.fee} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Fee" />
-// //             <input type="text" name="timeslots" value={editedDoctor.timeslots} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Time Slots" />
-// //           </div>
-// //           <div className="flex justify-end gap-2 mt-4">
-// //             <button onClick={() => setIsModalOpen(false)} className="px-4 py-2 bg-gray-400 text-white rounded">Cancel</button>
-// //             <button onClick={handleUpdate} className="px-4 py-2 bg-blue-500 text-white rounded">Save</button>
-// //           </div>
-// //         </div>
-// //       </Modal>
-// //     </div>
-// //   );
-// // };
-
-// // export default DoctorCard;
-
 // import React, { useState } from "react";
 // import { Link, useLocation } from "react-router-dom";
-// import Modal from "react-modal";
+// import { doc, updateDoc } from "firebase/firestore";
+// import { firestore } from "../../firebase"; // Import Firebase setup
 // import { toast } from "react-toastify";
+// import Modal from "react-modal";
 // import star from "../../assets/images/star.png";
-// import { firestore } from "../../firebase";
-// import { doc, updateDoc, deleteDoc } from "firebase/firestore";
 
 // Modal.setAppElement("#root");
 
-// const DoctorCard = ({ doctor, onDoctorUpdated, onDoctorDeleted }) => {
+// const DoctorCard = ({ doctor, onDoctorUpdated }) => {
 //   const {
 //     id,
 //     name,
-//     about,
 //     specialty,
 //     avgRating,
-//     totalRating,
 //     photo,
-//     totalPatients,
 //     hospital,
-//     duration,
+//     about,
 //     education,
 //     experience,
 //     fee,
 //     timeslots,
+//     totalPatients,
+//     totalRating,
+//     verified,
 //   } = doctor;
 
-//   const user = sessionStorage.getItem("email");
+//   const user = localStorage.getItem("email");
 //   const location = useLocation();
 //   const isAdminPage = location.pathname.startsWith("/admin");
 
 //   const [isModalOpen, setIsModalOpen] = useState(false);
 //   const [editedDoctor, setEditedDoctor] = useState({ ...doctor });
 //   const [selectedFile, setSelectedFile] = useState(null);
+//   const [updatedTimeslots, setUpdatedTimeslots] = useState(
+//     timeslots.map((slot) => new Date(slot.seconds * 1000).toISOString().slice(0, 16))
+//   );
+//   const [isVerified, setIsVerified] = useState(verified); // Track verification status
 
 //   // Handle input change
 //   const handleChange = (e) => {
@@ -262,43 +44,52 @@
 //     setEditedDoctor({ ...editedDoctor, [name]: value });
 //   };
 
-//   // Handle file upload
-//   const handleFileChange = (e) => {
-//     const file = e.target.files[0];
-//     setSelectedFile(file);
+//   // Handle timeslot change
+//   const handleTimeslotChange = (index, value) => {
+//     const updatedSlots = [...updatedTimeslots];
+//     updatedSlots[index] = value;
+//     setUpdatedTimeslots(updatedSlots);
 //   };
 
-//   // Handle doctor update
+//   // Handle file upload
+//   const handleFileChange = (e) => {
+//     setSelectedFile(e.target.files[0]);
+//   };
+
+//   // Handle update
 //   const handleUpdate = async () => {
 //     try {
 //       const doctorRef = doc(firestore, "doctors", id);
-//       await updateDoc(doctorRef, {
+//       const updatedDoctor = {
 //         ...editedDoctor,
 //         photo: selectedFile ? URL.createObjectURL(selectedFile) : editedDoctor.photo,
-//       });
+//         timeslots: updatedTimeslots.map((slot) => ({ seconds: new Date(slot).getTime() / 1000 })),
+//       };
 
-//       toast.success("Doctor details updated successfully!");
-//       onDoctorUpdated(id, editedDoctor);
+//       await updateDoc(doctorRef, updatedDoctor);
+//       toast.success("Doctor details updated!");
+
+//       if (onDoctorUpdated) onDoctorUpdated(id, updatedDoctor);
 //       setIsModalOpen(false);
 //     } catch (error) {
-//       console.error("Error updating doctor:", error);
-//       toast.error("Failed to update doctor.");
+//       console.error("Update error:", error);
+//       toast.error("Update failed!");
 //     }
 //   };
 
-//   // Handle doctor delete
-//   const handleDelete = async () => {
-//     const confirmDelete = window.confirm("Are you sure you want to delete this doctor?");
-//     if (confirmDelete) {
-//       try {
-//         const doctorRef = doc(firestore, "doctors", id);
-//         await deleteDoc(doctorRef);
-//         toast.success("Doctor deleted successfully!");
-//         onDoctorDeleted(id);
-//       } catch (error) {
-//         console.error("Error deleting doctor:", error);
-//         toast.error("Failed to delete doctor.");
-//       }
+//   // Handle verify/unverify
+//   const handleToggleVerify = async () => {
+//     try {
+//       const doctorRef = doc(firestore, "doctors", id);
+//       const newVerifiedStatus = !isVerified; // Toggle current state
+
+//       await updateDoc(doctorRef, { verified: newVerifiedStatus });
+//       setIsVerified(newVerifiedStatus); // Update UI immediately
+
+//       toast.success(`Doctor ${newVerifiedStatus ? "verified" : "unverified"} successfully!`);
+//     } catch (error) {
+//       console.error("Verification update error:", error);
+//       toast.error("Failed to update verification status.");
 //     }
 //   };
 
@@ -320,67 +111,64 @@
 //       <div className="mt-2">
 //         <span className="text-gray-600 text-sm">{hospital}</span>
 //         <div className="flex justify-center gap-4 mt-3">
-//           {!isAdminPage &&
-//             (user ? (
+//           {!isAdminPage && (
+//             user ? (
 //               <Link to={`/doctors/${id}`}>
-//                 <button className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-blue-700">
+//                 <button className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-blue-700 whitespace-nowrap">
 //                   Book Now
 //                 </button>
 //               </Link>
 //             ) : (
-//               <Link to={`/login`}>
-//                 <button className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-blue-700">
+//               <Link to={"/login"}>
+//                 <button className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-blue-700 whitespace-nowrap">
 //                   Book Now
 //                 </button>
 //               </Link>
-//             ))}
+//             )
+//           )}
 
 //           {isAdminPage && (
 //             <div>
 //               <button
-//                 className="border border-blue-500 px-3 py-1 text-sm text-blue-500 rounded-md hover:bg-blue-500 hover:text-white"
 //                 onClick={() => setIsModalOpen(true)}
+//                 className="border border-blue-500 px-3 py-1 text-sm text-blue-500 rounded-md hover:bg-blue-500 hover:text-white"
 //               >
 //                 EDIT
 //               </button>
 //               <button
-//                 className="border border-red-500 px-3 py-1 text-sm text-red-500 rounded-md hover:bg-red-500 hover:text-white ml-2"
-//                 onClick={handleDelete}
+//                 onClick={handleToggleVerify}
+//                 className={`border px-3 py-1 text-sm rounded-md ${
+//                   isVerified ? "border-red-500 text-red-500 hover:bg-red-500 hover:text-white" 
+//                             : "border-green-500 text-green-500 hover:bg-green-500 hover:text-white"
+//                 }`}
 //               >
-//                 DELETE
+//                 {isVerified ? "Unverify" : "Verify"}
 //               </button>
 //             </div>
 //           )}
 //         </div>
 //       </div>
 
-//       {/* Edit Modal */}
+//       {/* MODAL - (UNCHANGED) */}
 //       <Modal
 //         isOpen={isModalOpen}
 //         onRequestClose={() => setIsModalOpen(false)}
 //         className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
 //       >
-//         <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg relative">
+//         <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg relative overflow-y-auto max-h-[80vh]">
 //           <h2 className="text-xl font-semibold mb-4">Edit Doctor Details</h2>
-
-//           <div className="space-y-3 max-h-[70vh] overflow-y-auto p-2">
-//             <input type="text" name="name" value={editedDoctor.name} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Name" />
-//             <textarea name="about" value={editedDoctor.about} onChange={handleChange} className="w-full p-2 border rounded" placeholder="About"></textarea>
-//             <input type="text" name="specialty" value={editedDoctor.specialty} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Specialty" />
-//             <input type="number" name="avgRating" value={editedDoctor.avgRating} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Average Rating" />
-//             <input type="text" name="hospital" value={editedDoctor.hospital} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Hospital" />
-
-//             {/* File Upload */}
-//             <label className="block text-sm font-medium text-gray-700">Upload New Photo:</label>
+//           <div className="space-y-3 p-2">
+//             <input type="text" name="name" value={editedDoctor.name} onChange={handleChange} className="w-full p-2 border rounded" />
+//             <textarea name="about" value={editedDoctor.about} onChange={handleChange} className="w-full p-2 border rounded"></textarea>
+//             <input type="text" name="specialty" value={editedDoctor.specialty} onChange={handleChange} className="w-full p-2 border rounded" />
+//             <input type="text" name="education" value={editedDoctor.education} onChange={handleChange} className="w-full p-2 border rounded" />
+//             <input type="text" name="experience" value={editedDoctor.experience} onChange={handleChange} className="w-full p-2 border rounded" />
+//             <input type="text" name="fee" value={editedDoctor.fee} onChange={handleChange} className="w-full p-2 border rounded" />
 //             <input type="file" accept="image/*" onChange={handleFileChange} className="w-full p-2 border rounded" />
 
-//             {selectedFile && (
-//               <img src={URL.createObjectURL(selectedFile)} className="w-24 h-24 object-cover rounded mt-2" alt="Preview" />
-//             )}
+//             {selectedFile && <img src={URL.createObjectURL(selectedFile)} className="w-24 h-24 object-cover rounded mt-2" alt="preview" />}
 //           </div>
-
-//           {/* Sticky Footer */}
-//           <div className="absolute bottom-0 left-0 right-0 bg-white p-4 border-t flex justify-end gap-2">
+//           <div className="sticky bottom-0 bg-white p-4 border-t flex justify-end gap-2">
 //             <button onClick={() => setIsModalOpen(false)} className="px-4 py-2 bg-gray-400 text-white rounded">Cancel</button>
 //             <button onClick={handleUpdate} className="px-4 py-2 bg-blue-500 text-white rounded">Save</button>
 //           </div>
@@ -400,10 +188,26 @@ import { toast } from "react-toastify";
 import Modal from "react-modal";
 import star from "../../assets/images/star.png";
 
-Modal.setAppElement("#root"); // Prevents accessibility issues
+Modal.setAppElement("#root");
 
 const DoctorCard = ({ doctor, onDoctorUpdated, onDoctorDeleted }) => {
-  const { id, name, specialty, avgRating, photo, hospital } = doctor;
+  const {
+    id,
+    name,
+    specialty,
+    avgRating,
+    photo,
+    hospital,
+    about,
+    education,
+    experience,
+    fee,
+    timeslots,
+    totalPatients,
+    totalRating,
+    verified,
+  } = doctor;
+
   const user = localStorage.getItem("email");
   const location = useLocation();
   const isAdminPage = location.pathname.startsWith("/admin");
@@ -411,6 +215,9 @@ const DoctorCard = ({ doctor, onDoctorUpdated, onDoctorDeleted }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editedDoctor, setEditedDoctor] = useState({ ...doctor });
   const [selectedFile, setSelectedFile] = useState(null);
+  const [updatedTimeslots, setUpdatedTimeslots] = useState(
+    timeslots.map((slot) => new Date(slot.seconds * 1000).toISOString().slice(0, 16))
+  );
 
   // Handle input change
   const handleChange = (e) => {
@@ -418,23 +225,32 @@ const DoctorCard = ({ doctor, onDoctorUpdated, onDoctorDeleted }) => {
     setEditedDoctor({ ...editedDoctor, [name]: value });
   };
 
+  // Handle timeslot change
+  const handleTimeslotChange = (index, value) => {
+    const updatedSlots = [...updatedTimeslots];
+    updatedSlots[index] = value;
+    setUpdatedTimeslots(updatedSlots);
+  };
+
   // Handle file upload
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setSelectedFile(file);
+    setSelectedFile(e.target.files[0]);
   };
 
   // Handle update
   const handleUpdate = async () => {
     try {
       const doctorRef = doc(firestore, "doctors", id);
-      await updateDoc(doctorRef, {
+      const updatedDoctor = {
         ...editedDoctor,
         photo: selectedFile ? URL.createObjectURL(selectedFile) : editedDoctor.photo,
-      });
+        timeslots: updatedTimeslots.map((slot) => ({ seconds: new Date(slot).getTime() / 1000 })),
+      };
 
+      await updateDoc(doctorRef, updatedDoctor);
       toast.success("Doctor details updated!");
-      onDoctorUpdated(id, editedDoctor);
+
+      if (onDoctorUpdated) onDoctorUpdated(id, updatedDoctor);
       setIsModalOpen(false);
     } catch (error) {
       console.error("Update error:", error);
@@ -444,21 +260,16 @@ const DoctorCard = ({ doctor, onDoctorUpdated, onDoctorDeleted }) => {
 
   // Handle delete
   const handleDelete = async () => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this doctor?");
-    if (confirmDelete) {
-      try {
-        // Remove from UI first
-        onDoctorDeleted(id);
+    if (!window.confirm("Are you sure you want to delete this doctor?")) return;
 
-        // Delete from Firebase
-        const doctorRef = doc(firestore, "doctors", id);
-        await deleteDoc(doctorRef);
+    try {
+      await deleteDoc(doc(firestore, "doctors", id));
+      toast.success("Doctor deleted successfully!");
 
-        toast.success("Doctor deleted successfully!");
-      } catch (error) {
-        console.error("Error deleting doctor:", error);
-        toast.error("Failed to delete doctor.");
-      }
+      if (onDoctorDeleted) onDoctorDeleted(id); // Ensure UI updates dynamically
+    } catch (error) {
+      console.error("Error deleting doctor:", error);
+      toast.error("Failed to delete doctor.");
     }
   };
 
@@ -488,7 +299,7 @@ const DoctorCard = ({ doctor, onDoctorUpdated, onDoctorDeleted }) => {
                 </button>
               </Link>
             ) : (
-              <Link to={`/login`}>
+              <Link to={"/login"}>
                 <button className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-blue-700 whitespace-nowrap">
                   Book Now
                 </button>
@@ -521,50 +332,34 @@ const DoctorCard = ({ doctor, onDoctorUpdated, onDoctorDeleted }) => {
         onRequestClose={() => setIsModalOpen(false)}
         className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
       >
-        <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg relative">
+        <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg relative overflow-y-auto max-h-[80vh]">
           <h2 className="text-xl font-semibold mb-4">Edit Doctor Details</h2>
+          <div className="space-y-3 p-2">
+            <input type="text" name="name" value={editedDoctor.name} onChange={handleChange} className="w-full p-2 border rounded" />
+            <textarea name="about" value={editedDoctor.about} onChange={handleChange} className="w-full p-2 border rounded"></textarea>
+            <input type="text" name="specialty" value={editedDoctor.specialty} onChange={handleChange} className="w-full p-2 border rounded" />
+            <input type="text" name="education" value={editedDoctor.education} onChange={handleChange} className="w-full p-2 border rounded" />
+            <input type="text" name="experience" value={editedDoctor.experience} onChange={handleChange} className="w-full p-2 border rounded" />
+            <input type="text" name="fee" value={editedDoctor.fee} onChange={handleChange} className="w-full p-2 border rounded" />
+            <input type="file" accept="image/*" onChange={handleFileChange} className="w-full p-2 border rounded" />
+            {selectedFile && <img src={URL.createObjectURL(selectedFile)} className="w-24 h-24 object-cover rounded mt-2" alt="preview" />}
 
-          <div className="space-y-3 max-h-[60vh] overflow-y-auto p-2">
-            <input
-              type="text"
-              name="name"
-              value={editedDoctor.name}
-              onChange={handleChange}
-              className="w-full p-2 border rounded"
-            />
-            <textarea
-              name="about"
-              value={editedDoctor.about}
-              onChange={handleChange}
-              className="w-full p-2 border rounded"
-            ></textarea>
-            <input
-              type="text"
-              name="specialty"
-              value={editedDoctor.specialty}
-              onChange={handleChange}
-              className="w-full p-2 border rounded"
-            />
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-              className="w-full p-2 border rounded"
-            />
-
-            {selectedFile && (
-              <img src={URL.createObjectURL(selectedFile)} className="w-24 h-24 object-cover rounded mt-2" />
-            )}
+            <div>
+              <h3 className="font-semibold">Available Time Slots:</h3>
+              {updatedTimeslots.map((slot, index) => (
+                <input
+                  key={index}
+                  type="datetime-local"
+                  value={slot}
+                  onChange={(e) => handleTimeslotChange(index, e.target.value)}
+                  className="w-full p-2 border rounded"
+                />
+              ))}
+            </div>
           </div>
-
-          {/* Sticky Buttons */}
-          <div className="absolute bottom-0 left-0 right-0 bg-white p-4 border-t flex justify-end gap-2">
-            <button onClick={() => setIsModalOpen(false)} className="px-4 py-2 bg-gray-400 text-white rounded">
-              Cancel
-            </button>
-            <button onClick={handleUpdate} className="px-4 py-2 bg-blue-500 text-white rounded">
-              Save
-            </button>
+          <div className="sticky bottom-0 left-0 right-0 bg-white p-4 border-t flex justify-end gap-2">
+            <button onClick={() => setIsModalOpen(false)} className="px-4 py-2 bg-gray-400 text-white rounded">Cancel</button>
+            <button onClick={handleUpdate} className="px-4 py-2 bg-blue-500 text-white rounded">Save</button>
           </div>
         </div>
       </Modal>

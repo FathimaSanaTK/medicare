@@ -10,11 +10,12 @@ import { Timestamp } from "firebase/firestore";
 
 const Checkout = ({ doctorId, doctor, selectedTimeslot, selectedDate , pid }) => {
     const [showDialog, setShowDialog] = useState(false);
-    const patientId = pid;
+    const patientId = localStorage.getItem("userid");
     const navigate = useNavigate();
     const auth = getAuth();
     const user = auth.currentUser;
-
+    console.log(selectedDate, selectedTimeslot, doctorId, patientId);
+    
     const handleBooking = async () => {
         try {
             if (!selectedDate || !selectedTimeslot || !doctorId || !patientId) {
