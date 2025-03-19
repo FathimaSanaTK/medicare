@@ -16,6 +16,8 @@ import {BsArrowRight} from 'react-icons/bs'
 import About from '../components/About'
 import ServiceList from '../components/services/ServiceList'
 import DoctorList from '../components/doctors/DoctorList'
+import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
+
 
 
 
@@ -23,6 +25,32 @@ import DoctorList from '../components/doctors/DoctorList'
 const Home = () => {
 
   const user=localStorage.getItem("email");
+  const db = getFirestore();
+
+  const findLocation = async () => {
+    try {
+      const patientsRef = collection(db, "patients");
+      const q = query(patientsRef, where("role", "==", "admin"));
+      const querySnapshot = await getDocs(q);
+  
+      let locations = [];
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        if (data.location) {
+          locations.push(data.location);
+        }
+      });
+  
+      if (locations.length > 0) {
+        // Open the first location in Google Maps
+        window.open(locations[0], "_blank"); // Opens in a new tab
+      } else {
+        console.log("No admin locations found.");
+      }
+    } catch (error) {
+      console.error("Error fetching locations:", error);
+    }
+  };
 
   return (
     <>
@@ -135,9 +163,9 @@ const Home = () => {
                   <p className='text-textColor text-center font-[400]'>
                   Locate our nearby clinics and hospitals easily with our integrated map feature, ensuring quick access to medical care.
                   </p>
-                  <Link to='/doctors' className='w-[44px] h-[44px] rounded-full border border-solid border-blue-400 mt-[30px] mx-auto flex items-center 
+                  <Link className='w-[44px] h-[44px] rounded-full border border-solid border-blue-400 mt-[30px] mx-auto flex items-center 
                   justify-center group hover:bg-blue-600'> 
-                    <BsArrowRight className='group-hover:text-white w-6 h-5' />
+                    <BsArrowRight className='group-hover:text-white w-6 h-5' onClick={findLocation} />
                  </Link>
 
                 </div>

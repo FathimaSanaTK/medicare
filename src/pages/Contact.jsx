@@ -6,7 +6,7 @@ const Contact = () => {
       <div className='px-4 mx-auto max-w-screen-md'>
         <h2 className='heading text-center'>Contact Us</h2>
         <p className='font-light text-center text_para'>
-        Got a technical issue? want to send feedback about a beta feature? Let
+        Got a technical issue? want to send feedback about a better feature? Let
 us know.
 
         </p>

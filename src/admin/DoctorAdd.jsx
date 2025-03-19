@@ -4,6 +4,9 @@ import { useState } from "react";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { Timestamp } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+import { MDBBtn } from 'mdb-react-ui-kit';
+import { Link } from 'react-router-dom';
 
 
 export default function DoctorForm() {
@@ -24,6 +27,7 @@ export default function DoctorForm() {
   });
 
   const [timeslot, setTimeslot] = useState("");
+  const navigate=useNavigate()
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -89,6 +93,7 @@ const handleSubmit = async (e) => {
       fee: "",
       timeslots: [] // Reset timeslots
     });
+    navigate('/admin')
   } catch (error) {
     console.error("Error adding doctor:", error);
   }
@@ -141,7 +146,11 @@ const handleSubmit = async (e) => {
          </div>
         </div>
 
-        <button type="submit" className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded font-bold text-lg">Submit</button>
+        <button type="submit" className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded font-bold text-lg mb-3">Submit</button>
+        <Link to={'/admin'}>
+        <button className="w-full bg-blue-600 hover:bg-red-700 text-white py-3 rounded font-bold text-lg">Cancel</button>
+
+          </Link>
       </form>
     </div>
   );

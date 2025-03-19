@@ -1,124 +1,14 @@
 
 
-// import React, { useEffect, useState } from 'react';
-// import DoctorCard from '../components/doctors/DoctorCard';
-// import { getFirestore, collection, getDocs } from 'firebase/firestore';
 
-// const AdmDoctors = () => {
-//   const [allDoctors, setAllDoctors] = useState([]);
 
-//   const getAllDoctors = async () => {
-//     const db = getFirestore();
-//     const doctorsCollection = collection(db, "doctors");
-//     const doctorsSnapshot = await getDocs(doctorsCollection);
-//     const doctorsList = doctorsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-//     setAllDoctors(doctorsList);
-//   };
-
-//   useEffect(() => {
-//     getAllDoctors();
-//   }, []);
-
-//   return (
-//     <>
-//       <section className="bg-[#fff9ea]">
-//         <div className="container text-center">
-//           <div className="max-w-[570px] mt-[30px] mx-auto bg-orange-200 rounded-md flex items-center justify-between">
-//             <input
-//               type="search"
-//               className='pl-4 pr-2 bg-transparent w-full focus:outline-none cursor-pointer placeholder:text-textColor'
-//               placeholder="Search Doctors"
-//             />
-//             <button className='btn mt-0 rounded rounded-r-md'>
-//               Search
-//             </button>
-//           </div>
-//         </div>
-//       </section>
-
-//       <section>
-//         <div className='container'>
-//           <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 lg:grid-cols-4'>
-//             {allDoctors.map((doctor) => (
-//               <DoctorCard key={doctor.id} doctor={doctor} />
-//             ))}
-//           </div>
-//         </div>
-//       </section>
-//     </>
-//   );
-// };
-
-// export default AdmDoctors;
-
-// import React, { useEffect, useState } from 'react';
-// import DoctorCard from '../components/doctors/DoctorCard';
-// import { getFirestore, collection, getDocs } from 'firebase/firestore';
-
-// const AdmDoctors = () => {
-//   const [allDoctors, setAllDoctors] = useState([]);
-//   const [searchQuery, setSearchQuery] = useState('');
-//   const [filteredDoctors, setFilteredDoctors] = useState([]);
-
-//   const getAllDoctors = async () => {
-//     const db = getFirestore();
-//     const doctorsCollection = collection(db, "doctors");
-//     const doctorsSnapshot = await getDocs(doctorsCollection);
-//     const doctorsList = doctorsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-//     setAllDoctors(doctorsList);
-//     setFilteredDoctors(doctorsList);
-//   };
-
-//   useEffect(() => {
-//     getAllDoctors();
-//   }, []);
-
-//   useEffect(() => {
-//     const lowercasedQuery = searchQuery.toLowerCase();
-//     const filtered = allDoctors.filter(doctor =>
-//       doctor.name.toLowerCase().includes(lowercasedQuery) ||
-//       doctor.specialty.toLowerCase().includes(lowercasedQuery)
-//     );
-//     setFilteredDoctors(filtered);
-//   }, [searchQuery, allDoctors]);
-
-//   return (
-//     <>
-//       <section className="bg-[#fff9ea]">
-//         <div className="container text-center">
-//           <div className="max-w-[570px] mt-[30px] mx-auto bg-orange-200 rounded-md flex items-center justify-between">
-//             <input
-//               type="search"
-//               className='pl-4 pr-2 bg-transparent w-full focus:outline-none cursor-pointer placeholder:text-textColor'
-//               placeholder="Search Doctors"
-//               value={searchQuery}
-//               onChange={(e) => setSearchQuery(e.target.value)}
-//             />
-//             <button className='btn mt-0 rounded rounded-r-md'>
-//               Search
-//             </button>
-//           </div>
-//         </div>
-//       </section>
-
-//       <section>
-//         <div className='container'>
-//           <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 lg:grid-cols-4'>
-//             {filteredDoctors.map((doctor) => (
-//               <DoctorCard key={doctor.id} doctor={doctor} />
-//             ))}
-//           </div>
-//         </div>
-//       </section>
-//     </>
-//   );
-// };
-
-// export default AdmDoctors;
 
 import React, { useEffect, useState } from 'react';
 import DoctorCard from '../components/doctors/DoctorCard';
 import { getFirestore, collection, onSnapshot } from 'firebase/firestore';
+import { MDBBtn } from 'mdb-react-ui-kit';
+import { FaPlus } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const AdmDoctors = () => {
   const [allDoctors, setAllDoctors] = useState([]);
@@ -130,7 +20,6 @@ const AdmDoctors = () => {
     const db = getFirestore();
     const doctorsCollection = collection(db, "doctors");
 
-    // Using onSnapshot for real-time updates
     const unsubscribe = onSnapshot(doctorsCollection, (snapshot) => {
       const doctorsList = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       setAllDoctors(doctorsList);
@@ -138,7 +27,7 @@ const AdmDoctors = () => {
       setLoading(false);
     });
 
-    return () => unsubscribe(); // Cleanup listener when component unmounts
+    return () => unsubscribe();
   }, []);
 
   useEffect(() => {
@@ -152,35 +41,48 @@ const AdmDoctors = () => {
 
   return (
     <>
-      <section className="bg-[#fff9ea]">
-        <div className="container text-center">
-          <div className="max-w-[570px] mt-[30px] mx-auto bg-orange-200 rounded-md flex items-center justify-between">
-            <input
-              type="search"
-              className="pl-4 pr-2 bg-transparent w-full focus:outline-none cursor-pointer placeholder:text-textColor"
-              placeholder="Search Doctors"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <button
-              className="btn mt-0 rounded rounded-r-md"
-              onClick={() => setFilteredDoctors(allDoctors.filter(doctor =>
-                doctor.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                doctor.specialty.toLowerCase().includes(searchQuery.toLowerCase())
-              ))}
-            >
-              Search
-            </button>
+      <section className="bg-[#fff9ea] py-6">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            
+            {/* Search Bar */}
+            <div className="flex items-center bg-orange-200 rounded-md overflow-hidden w-full sm:max-w-md">
+              <input
+                type="search"
+                className="pl-4 pr-2 bg-transparent w-full focus:outline-none placeholder:text-textColor py-2"
+                placeholder="Search Doctors"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <button
+                className="bg-orange-500 text-white px-4 py-2 rounded-r-md hover:bg-orange-600"
+                onClick={() => setFilteredDoctors(allDoctors.filter(doctor =>
+                  doctor.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                  doctor.specialty.toLowerCase().includes(searchQuery.toLowerCase())
+                ))}
+              >
+                Search
+              </button>
+            </div>
+
+            {/* Success Button */}
+          <Link to={'/admin/doctoradd'}>
+          <MDBBtn rounded color="success" size="sm" className="d-flex align-items-center">
+  <FaPlus className="me-1" /> Add Doctor
+</MDBBtn>
+          </Link>
+
+
           </div>
         </div>
       </section>
 
-      <section>
-        <div className="container">
+      <section className="py-6">
+        <div className="container mx-auto px-4">
           {loading ? (
             <p className="text-center text-gray-600">Loading doctors...</p>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 lg:grid-cols-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
               {filteredDoctors.length > 0 ? (
                 filteredDoctors.map((doctor) => <DoctorCard key={doctor.id} doctor={doctor} />)
               ) : (

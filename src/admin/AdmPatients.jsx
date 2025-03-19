@@ -1,4 +1,5 @@
 
+
 import React, { useEffect, useState } from 'react';
 import { firestore } from '../firebase'; // Adjust based on your Firebase config location
 import { collection, getDocs } from 'firebase/firestore';
@@ -15,7 +16,13 @@ function AdmPatients() {
           const data = doc.data();
           return {
             id: doc.id,
-            ...data,
+            name: data.name || 'N/A',
+            uid: data.uid || 'N/A',
+            phone: data.phone || 'N/A',
+            email: data.email || 'N/A',
+            age: data.age || 'N/A',
+            gender: data.gender || 'N/A',
+            allergy: data.allergy || 'None',
             createdAt: data.createdAt ? data.createdAt.toDate().toLocaleDateString() : 'N/A'
           };
         });
@@ -29,9 +36,9 @@ function AdmPatients() {
   }, []);
 
   const filteredPatients = patients.filter(patient =>
-    patient.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    patient.uid.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    patient.phone.toLowerCase().includes(searchQuery.toLowerCase())
+    (patient.name?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
+    (patient.uid?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
+    (patient.phone?.toLowerCase() || '').includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -64,18 +71,24 @@ function AdmPatients() {
             </tr>
           </thead>
           <tbody>
-            {filteredPatients.map(patient => (
-              <tr key={patient.id} className="border-b text-center hover:bg-gray-100">
-                <td className="py-2 px-4">{patient.name}</td>
-                <td className="py-2 px-4">{patient.uid}</td>
-                <td className="py-2 px-4">{patient.phone}</td>
-                <td className="py-2 px-4">{patient.email}</td>
-                <td className="py-2 px-4">{patient.age}</td>
-                <td className="py-2 px-4">{patient.gender}</td>
-                <td className="py-2 px-4">{patient.allergy || 'None'}</td>
-                <td className="py-2 px-4">{patient.createdAt}</td>
+            {filteredPatients.length > 0 ? (
+              filteredPatients.map(patient => (
+                <tr key={patient.id} className="border-b text-center hover:bg-gray-100">
+                  <td className="py-2 px-4">{patient.name}</td>
+                  <td className="py-2 px-4">{patient.uid}</td>
+                  <td className="py-2 px-4">{patient.phone}</td>
+                  <td className="py-2 px-4">{patient.email}</td>
+                  <td className="py-2 px-4">{patient.age}</td>
+                  <td className="py-2 px-4">{patient.gender}</td>
+                  <td className="py-2 px-4">{patient.allergy}</td>
+                  <td className="py-2 px-4">{patient.createdAt}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="8" className="py-4 text-center text-gray-500">No patients found</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
@@ -84,4 +97,3 @@ function AdmPatients() {
 }
 
 export default AdmPatients;
-

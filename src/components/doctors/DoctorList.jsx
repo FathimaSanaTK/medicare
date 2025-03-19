@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { firestore } from "../../firebase"; // Ensure correct Firebase setup
-import { collection, query, orderBy, limit, getDocs } from "firebase/firestore";
+import { collection, query, orderBy, limit, getDocs, where } from "firebase/firestore";
 import DoctorCard from "./DoctorCard";
 
 const DoctorList = () => {
@@ -12,13 +12,13 @@ const DoctorList = () => {
     const fetchDoctors = async () => {
       try {
         const doctorsRef = collection(firestore, "doctors"); // Reference to the "doctors" collection
-        const q = query(doctorsRef, orderBy("experience"), limit(4)); // Order by "name" (or another field) and limit to 3
+        const q = query(doctorsRef, orderBy("experience","desc"), limit(3)); // Order by "name" (or another field) and limit to 3
         const querySnapshot = await getDocs(q);
 
         const doctorsData = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
-        }));
+        })).filter((doctor)=>doctor.verified);
 
         setDoctors(doctorsData);
       } catch (error) {

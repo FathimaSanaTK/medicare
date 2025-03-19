@@ -91,7 +91,7 @@ const SidePanel = () => {
   };
 
   return (
-    <div className="shadow-lg p-6 bg-white rounded-lg max-w-lg mx-auto mt-5 w-full sm:w-96 md:w-[500px] lg:w-[600px]">
+    <div className="shadow-lg p-6 bg-white rounded-lg max-w-lg mx-auto mt-2 w-full sm:w-96 md:w-[500px] lg:w-[600px]">
       {loading ? (
         <p className="text-center text-gray-600">Loading...</p>
       ) : error ? (
