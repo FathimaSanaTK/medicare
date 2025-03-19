@@ -7,7 +7,7 @@ import { doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { firestore } from "../../firebase"; // Import Firebase setup
 import { toast } from "react-toastify";
 import Modal from "react-modal";
-import star from "../../assets/images/star.png";
+import starIcon from "../../assets/images/Star.png";
 
 Modal.setAppElement("#root");
 
@@ -106,7 +106,7 @@ const DoctorCard = ({ doctor, onDoctorUpdated, onDoctorDeleted }) => {
       <div className="flex justify-between items-center mt-2">
         <span className="bg-[#CCF0F3] px-3 py-1 rounded-md text-sm">{specialty}</span>
         <div className="flex items-center gap-1">
-          <img src={star} className="w-4 h-4" alt="rating" />
+          <img src={starIcon} className="w-4 h-4" alt="rating" />
           <span className="text-sm font-medium">{avgRating}</span>
         </div>
       </div>
