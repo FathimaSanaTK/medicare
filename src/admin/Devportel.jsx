@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { firestore, auth } from "../firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { collection, addDoc, getDocs } from "firebase/firestore";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Devportel() {
@@ -17,6 +17,11 @@ function Devportel() {
     phone: "",
     logo: null,
     role: "admin",
+    location: "",
+    facebook: "",
+    linkedin: "",
+    twitter: "",
+    instagram: "",
   });
 
   useEffect(() => {
@@ -54,7 +59,7 @@ function Devportel() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.name && formData.email && formData.password && formData.phone) {
+    if (formData.name && formData.email && formData.password && formData.phone && formData.location) {
       try {
         let logoUrl = "";
         if (formData.logo) {
@@ -77,15 +82,31 @@ function Devportel() {
           phone: formData.phone,
           logo: logoUrl,
           role: formData.role,
+          location: formData.location,
+          facebook: formData.facebook,
+          linkedin: formData.linkedin,
+          twitter: formData.twitter,
+          instagram: formData.instagram,
           createdAt: new Date(),
         };
 
         await addDoc(collection(firestore, "patients"), newAdmin);
 
-        setHospitals([...hospitals, newAdmin]); // Update UI immediately
+        setHospitals([...hospitals, newAdmin]);
 
-        // **Clear the form fields and hide the form**
-        setFormData({ name: "", email: "", password: "", phone: "", logo: null, role: "admin" });
+        setFormData({
+          name: "",
+          email: "",
+          password: "",
+          phone: "",
+          logo: null,
+          role: "admin",
+          location: "",
+          facebook: "",
+          linkedin: "",
+          twitter: "",
+          instagram: "",
+        });
         setFormVisible(false);
 
         toast.success("Admin registered successfully!", { position: "top-right", autoClose: 3000 });
@@ -93,11 +114,14 @@ function Devportel() {
         console.error("Error registering admin:", error);
         toast.error(error.message);
       }
+    } else {
+      toast.warning("Please fill all required fields.");
     }
   };
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-gray-100 rounded-lg shadow-lg">
+      <ToastContainer />
       <h2 className="text-2xl font-bold mb-4 text-center text-gray-700">Admin Registration</h2>
 
       <button
@@ -151,6 +175,48 @@ function Devportel() {
             onChange={handleChange}
             className="w-full px-3 py-2 mb-2"
           />
+          <input
+            type="url"
+            name="location"
+            placeholder="Google Maps Link"
+            value={formData.location}
+            onChange={handleChange}
+            required
+            className="w-full px-3 py-2 mb-2 border rounded-md"
+          />
+          <input
+            type="url"
+            name="facebook"
+            placeholder="Facebook Link"
+            value={formData.facebook}
+            onChange={handleChange}
+            className="w-full px-3 py-2 mb-2 border rounded-md"
+          />
+          <input
+            type="url"
+            name="linkedin"
+            placeholder="LinkedIn Link"
+            value={formData.linkedin}
+            onChange={handleChange}
+            className="w-full px-3 py-2 mb-2 border rounded-md"
+          />
+          <input
+            type="url"
+            name="twitter"
+            placeholder="Twitter Link"
+            value={formData.twitter}
+            onChange={handleChange}
+            className="w-full px-3 py-2 mb-2 border rounded-md"
+          />
+          <input
+            type="url"
+            name="instagram"
+            placeholder="Instagram Link"
+            value={formData.instagram}
+            onChange={handleChange}
+            className="w-full px-3 py-2 mb-2 border rounded-md"
+          />
+
           <button
             type="submit"
             className="bg-green-500 text-white px-4 py-2 rounded-md w-full hover:bg-green-600"
@@ -174,6 +240,7 @@ function Devportel() {
                 <p className="font-semibold text-gray-700">{hospital.name}</p>
                 <p className="text-gray-600">{hospital.email}</p>
                 <p className="text-gray-600">{hospital.phone}</p>
+                <a href={hospital.location} target="_blank" rel="noreferrer" className="text-blue-500 underline">Google Maps</a>
               </div>
             </li>
           ))

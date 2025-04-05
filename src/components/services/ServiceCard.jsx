@@ -1,43 +1,13 @@
-// import React from "react";
-// import { FaTrashAlt } from "react-icons/fa";
-// import { MdEdit } from "react-icons/md";
-// import { useLocation } from "react-router-dom";
 
-// const ServiceCard = ({ item }) => {
-//   const { name, description, bgColor, textColor } = item;
-//   const location = useLocation();
-//     const isAdminPage = location.pathname.startsWith("/admin");
-
-//   return (
-//     <div
-//       className={`p-6 rounded-lg shadow-md transition-transform duration-300 hover:scale-105`}
-//       style={{ backgroundColor: bgColor || "#f8f9fa", color: textColor || "#333" }}
-//     >
-//       <h2 className="text-xl font-bold mb-3">{name}</h2>
-//       <p className="text-sm mb-4">{description}</p>
-
-//       {/* Action Buttons */}
-//       {isAdminPage &&
-//       <div className="flex items-center gap-4">
-//         <button className="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-//           <MdEdit size={18} />
-//         </button>
-//         <button className="p-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition">
-//           <FaTrashAlt size={16} />
-//         </button>
-//       </div>
-// }
-//     </div>
-//   );
-// };
-
-// export default ServiceCard;
 import React, { useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { useLocation } from "react-router-dom";
 import { firestore } from "../../firebase"; // Firestore Import
 import { doc, updateDoc, deleteDoc } from "firebase/firestore";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 const ServiceCard = ({ item }) => {
   const { id, name, description, bgColor, textColor } = item;
@@ -65,19 +35,23 @@ const ServiceCard = ({ item }) => {
   };
 
   const handleDelete = async () => {
+    const confirmed = window.confirm("Are you sure you want to delete this service?");
+    if (!confirmed) return;
+  
     try {
       const docRef = doc(firestore, "services", id);
       await deleteDoc(docRef);
-      alert("Service deleted successfully!");
+      toast.success("Service deleted successfully!");
     } catch (error) {
       console.error("Error deleting document: ", error);
-      alert("Failed to delete service. Please try again.");
+      toast.error("Failed to delete service. Please try again.");
     }
   };
+  
 
   return (
     <div
-      className={`p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200`}
+      className={`p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 hover:scale-105`}
       style={{ backgroundColor: bgColor || "#f8f9fa", color: textColor || "#333" }}
     >
       <h2 className="text-2xl font-bold mb-3">{name}</h2>

@@ -3,19 +3,20 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import signup from '../assets/images/loginp.gif';
-import { auth, firestore } from "../firebase"; 
+import { auth, firestore } from "../firebase";
 import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc, collection, query, where, getDocs } from "firebase/firestore"; 
+import { doc, getDoc, collection, query, where, getDocs } from "firebase/firestore";
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; // 👁️ Added for toggle
 
 const Login = () => {
     const [formData, setFormData] = useState({ email: "", password: "" });
-    const [role, setRole] = useState(null); // ✅ Initialize as null
+    const [role, setRole] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false); // 👁️ state to toggle password visibility
     const navigate = useNavigate();
 
-    // ✅ Effect to check if the user is already logged in
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             if (user) {
@@ -42,10 +43,8 @@ const Login = () => {
                     break;
             }
         }
-    }, [role, navigate]); // Ensure `navigate` is included in the dependency array
-    
+    }, [role, navigate]);
 
-    // ✅ Function to fetch user details from Firestore
     const fetchUserDetails = async (uid) => {
         try {
             const patientsRef = collection(firestore, "patients");
@@ -54,9 +53,8 @@ const Login = () => {
 
             if (!querySnapshot.empty) {
                 const userData = querySnapshot.docs[0].data();
-                localStorage.setItem("role", userData.role); // ✅ Store role in localStorage
-                setRole(userData.role); // ✅ Update state
-                
+                localStorage.setItem("role", userData.role);
+                setRole(userData.role);
                 console.log("User role:", userData.role);
             } else {
                 console.log("No user found with this UID in Firestore.");
@@ -66,32 +64,20 @@ const Login = () => {
         }
     };
 
-    // ✅ Handle login function
     const handleLogin = async (e) => {
         e.preventDefault();
         setLoading(true);
-
         try {
             const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
             const user = userCredential.user;
-            console.log("User logged in:", user);
-
             toast.success("Login Successful!", { position: "top-right", autoClose: 3000 });
-
-            // Store user details in localStorage
             localStorage.setItem("email", user.email);
             localStorage.setItem("userid", user.uid);
-
-            // Fetch role from Firestore and update state
             await fetchUserDetails(user.uid);
-
-            // ✅ Clear form after login
             setFormData({ email: "", password: "" });
-
         } catch (error) {
             console.error("Login Error:", error.message);
             let errorMessage = "Login failed. Please try again.";
-
             if (error.code === "auth/user-not-found") {
                 errorMessage = "Email not registered. Please sign up.";
                 navigate('/register');
@@ -100,7 +86,6 @@ const Login = () => {
             } else if (error.code === "auth/invalid-email") {
                 errorMessage = "Invalid email format.";
             }
-
             toast.error(errorMessage, { position: "top-right", autoClose: 3000 });
         } finally {
             setLoading(false);
@@ -135,16 +120,24 @@ const Login = () => {
                                 required
                             />
                         </div>
-                        <div className='mb-5'>
+
+                        {/* ✅ Updated Password Field with Eye Toggle */}
+                        <div className='mb-5 relative'>
                             <input
-                                type="password"
-                                className='form-control'
+                                type={showPassword ? "text" : "password"}
+                                className='form-control pr-10'
                                 onChange={e => setFormData({ ...formData, password: e.target.value })}
                                 placeholder='Enter Your Password'
                                 name='password'
                                 value={formData.password || ""}
                                 required
                             />
+                            <span
+                                onClick={() => setShowPassword(!showPassword)}
+                                className='absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer text-gray-500'
+                            >
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </span>
                         </div>
 
                         <div className='mb-3'>

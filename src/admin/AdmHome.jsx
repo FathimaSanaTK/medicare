@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
-import { FaUserMd, FaUsers, FaCalendarCheck, FaConciergeBell } from "react-icons/fa";
+import { FaUserMd, FaUsers, FaCalendarCheck, FaConciergeBell, FaBriefcaseMedical } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const AdminHome = () => {
@@ -49,8 +49,8 @@ const AdminHome = () => {
         <Col md={3}>
           <Card className="text-white bg-danger shadow-sm">
             <Card.Body className="d-flex align-items-center">
-              <FaConciergeBell size={30} className="me-3" />
-              <div>
+            <FaBriefcaseMedical size={30} className="me-3" />
+            <div>
                 <h5>Services</h5>
                 <h4>15</h4>
               </div>

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Nav, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { FaHome, FaUserMd, FaConciergeBell, FaCalendarCheck, FaUsers, FaBars, FaSignOutAlt } from "react-icons/fa";
+import { FaHome, FaUserMd, FaConciergeBell, FaCalendarCheck, FaUsers, FaBars, FaSignOutAlt, FaBriefcaseMedical } from "react-icons/fa";
 import AdmHome from "./AdmHome";
 import AdmDoctors from "./AdmDoctors";
 import AdmServices from "./AdmServices";
@@ -58,7 +58,7 @@ const AdminDashboard = () => {
               <FaUserMd className="me-2" /> Doctors
             </Nav.Link>
             <Nav.Link className="text-white d-flex align-items-center" onClick={() => setActiveTab("services")}>
-              <FaConciergeBell className="me-2" /> Services
+              <FaBriefcaseMedical className="me-2" /> Services
             </Nav.Link>
             <Nav.Link className="text-white d-flex align-items-center" onClick={() => setActiveTab("bookings")}>
               <FaCalendarCheck className="me-2" /> Bookings

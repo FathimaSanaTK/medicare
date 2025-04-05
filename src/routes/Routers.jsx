@@ -16,6 +16,7 @@ import ServiceAdd from '../admin/ServiceAdd';
 import ServiceList from '../components/services/ServiceList';
 import AdminDashboard from '../admin/AdminDashboard';
 import Devportel from '../admin/Devportel';
+import Dashboard from '../profile/Dashboard';
 
 const Routers = () => {
   return  <Routes>
@@ -27,7 +28,7 @@ const Routers = () => {
    <Route path='/register' element={<Signup/>}/>
    <Route path='/contact' element={<Contact/>}/>
    <Route path='/services' element={<ServiceList/>}/>
-   <Route path='/user/profile' element={<MyAccount/>}/>
+   <Route path='/user/profile' element={<Dashboard/>}/>
    <Route path='/user/profile/bookings' element={<MyBooking/>}/>
    <Route path='/redirect' element={<DashboardRedirection/>}/>
    <Route path='/admin' element={<AdminDashboard/>}/>
