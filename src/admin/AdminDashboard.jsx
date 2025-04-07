@@ -3,12 +3,13 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Nav, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { FaHome, FaUserMd, FaConciergeBell, FaCalendarCheck, FaUsers, FaBars, FaSignOutAlt, FaBriefcaseMedical } from "react-icons/fa";
+import { FaHome, FaUserMd, FaConciergeBell, FaCalendarCheck, FaUsers, FaBars, FaSignOutAlt, FaBriefcaseMedical, FaQrcode } from "react-icons/fa";
 import AdmHome from "./AdmHome";
 import AdmDoctors from "./AdmDoctors";
 import AdmServices from "./AdmServices";
 import AdmBookings from "./AdmBookings";
 import AdmPatients from "./AdmPatients";
+import AdmQrcode from "./AdmQrcode";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
@@ -32,6 +33,8 @@ const AdminDashboard = () => {
         return <AdmBookings />;
       case "patients":
         return <AdmPatients />;
+      case "qrcode":
+        return <AdmQrcode/>;
       default:
         return <h2>Welcome to Admin Dashboard</h2>;
     }
@@ -65,6 +68,9 @@ const AdminDashboard = () => {
             </Nav.Link>
             <Nav.Link className="text-white d-flex align-items-center" onClick={() => setActiveTab("patients")}>
               <FaUsers className="me-2" /> Patients
+            </Nav.Link>
+            <Nav.Link className="text-white d-flex align-items-center" onClick={() => setActiveTab("qrcode")}>
+              <FaQrcode className="me-2" /> QR Code
             </Nav.Link>
           </Nav>
 
