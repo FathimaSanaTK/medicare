@@ -10,12 +10,12 @@ function AdmQrcode() {
         </div>
         <h2 className="text-2xl font-bold mb-2">Hospital WhatsApp QR Code</h2>
         <p className="text-gray-600 mb-6">
-          Scan the QR code below to connect with us on WhatsApp for inquiries or appointments.
+          Scan the QR code below to connect yuor hospital's whatsapp number to this website.
         </p>
         <div className="flex justify-center">
           {/* Replace the src below with your actual QR code URL */}
           <img
-            src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://wa.me/your-number"
+            src=""
             alt="Hospital WhatsApp QR Code"
             className="w-48 h-48 rounded-lg border"
           />
